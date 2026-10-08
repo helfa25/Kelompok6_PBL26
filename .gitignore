@@ -18,6 +18,8 @@ desktop.ini
 *.log
 error_log
 
-# Uploaded product files (preserve folder with .gitkeep)
+# Uploaded product & 3D files (preserve folders with .gitkeep)
 uploads/products/*
 !uploads/products/.gitkeep
+uploads/3d/*
+!uploads/3d/.gitkeep

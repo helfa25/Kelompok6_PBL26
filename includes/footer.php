@@ -15,11 +15,11 @@
         <!-- Kolom 1: Tentang Kami -->
         <div class="footer-col">
           <div class="navbar-brand" style="margin-bottom: 16px;">
-            <img src="assets/images/logo.png" alt="Tender Projects Logo" class="brand-logo-img" style="width: 44px; height: 44px;">
-            <span class="brand-text">Tender<span style="color: var(--accent);">Projects</span></span>
+            <img src="assets/images/logo.png" alt="FastTender Logo" class="brand-logo-img" style="width: 44px; height: 44px;">
+            <span class="brand-text">Fast<span style="color: var(--accent);">Tender</span></span>
           </div>
           <p class="footer-desc">
-            Tender Projects (Fastender) adalah platform e-commerce pre-order terintegrasi khusus untuk pembuatan apparel angkatan, jaket varsity, kemeja PDH organisasi, dan merchandise kampus dengan standar mutu konveksi terbaik di Indonesia.
+            FastTender adalah platform e-commerce pre-order terintegrasi khusus untuk pembuatan apparel angkatan, jaket varsity, kemeja PDH organisasi, dan merchandise kampus dengan standar mutu konveksi terbaik di Indonesia.
           </p>
         </div>
 

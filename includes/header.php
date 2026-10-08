@@ -5,7 +5,7 @@
  */
 require_once __DIR__ . '/functions.php';
 
-$pageTitle = $pageTitle ?? 'Fastender - Platform E-Commerce Pre-Order Apparel & Merchandise';
+$pageTitle = $pageTitle ?? 'FastTender - Platform E-Commerce Pre-Order Apparel & Merchandise';
 $activePage = $activePage ?? 'beranda';
 ?>
 <!DOCTYPE html>

@@ -16,13 +16,36 @@ $totalRevenue = 184500000;
 foreach ($orders as $ord) {
     $totalRevenue += (int)($ord['total_price'] ?? ($ord['total'] ?? 0));
 }
+
+// Handle form simpan 3D showcase dari Admin
+$save3DSuccess = false;
+$flash3DMessage = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_3d_showcase') {
+    $fileData = $_FILES['png_file'] ?? null;
+    $updated3D = save3DShowcaseConfig($_POST, $fileData);
+    
+    // Response JSON jika AJAX
+    if ((!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || isset($_POST['is_ajax'])) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'config' => $updated3D,
+            'message' => 'Model 3D berhasil disimpan dan langsung aktif berotasi di halaman Beranda!'
+        ]);
+        exit;
+    }
+    $save3DSuccess = true;
+    $flash3DMessage = 'Model 3D berhasil disimpan dan langsung aktif berotasi di halaman Beranda!';
+}
+
+$showcase3D = get3DShowcaseConfig();
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Fastender Pre-Order Platform</title>
+  <title>Admin Dashboard - FastTender Pre-Order Platform</title>
   
   <!-- Google Fonts: Poppins & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -180,6 +203,142 @@ foreach ($orders as $ord) {
 
         </div>
 
+        <!-- ========================================================
+             STUDIO 3D SHOWCASE: DRAG & DROP PNG TO 3D MODEL BERANDA
+             ======================================================== -->
+        <div class="admin-3d-studio-card" id="studio-3d-section">
+          
+          <div class="admin-3d-studio-header">
+            <div>
+              <h2 class="admin-3d-studio-title">
+                <span>🔮 Studio Model 3D Beranda (Drag &amp; Drop PNG)</span>
+                <span class="badge badge-accent">LIVE DI BERANDA</span>
+              </h2>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+                Tarik dan lepaskan file PNG logo atau desain apparel di bawah ini. Sistem Three.js WebGL langsung mengonversinya menjadi model 3D dan ditampilkan berotasi pelan di halaman Beranda.
+              </p>
+            </div>
+            <div>
+              <a href="index.php" target="_blank" class="btn btn-outline-primary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                Lihat di Beranda
+              </a>
+            </div>
+          </div>
+
+          <?php if (!empty($flash3DMessage)): ?>
+            <div style="background: #dcfce7; border: 1px solid #86efac; color: #15803d; padding: 12px 16px; border-radius: var(--radius-md); font-size: 13px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
+              <span>✓</span>
+              <span><?= htmlspecialchars($flash3DMessage) ?></span>
+            </div>
+          <?php endif; ?>
+
+          <div id="alert-3d-ajax" style="display: none; padding: 12px 16px; border-radius: var(--radius-md); font-size: 13px; margin-bottom: 18px;"></div>
+
+          <div class="admin-3d-grid">
+            
+            <!-- Kolom Kiri: Dropzone & Kontrol Pengaturan -->
+            <div>
+              <!-- Drag and Drop Dropzone -->
+              <div class="dropzone-3d" id="dropzone-png">
+                <input type="file" id="png-file-input" accept="image/png" style="display: none;">
+                <div class="dropzone-3d-icon">
+                  📥
+                </div>
+                <div class="dropzone-3d-title">Tarik &amp; Lepaskan File PNG di Sini</div>
+                <div class="dropzone-3d-desc">
+                  Atau klik untuk memilih file dari komputer. File PNG transparan akan langsung dikonversi menjadi model 3D secara instan.
+                </div>
+                <button type="button" class="btn btn-outline-accent btn-sm" onclick="document.getElementById('png-file-input').click()">
+                  Pilih File PNG
+                </button>
+                <div id="file-selected-info" style="margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--accent); display: none;"></div>
+              </div>
+
+              <!-- Form Pengaturan Model 3D -->
+              <form id="form-3d-showcase" method="POST" enctype="multipart/form-data" onsubmit="handleSave3D(event)">
+                <input type="hidden" name="action" value="save_3d_showcase">
+                <input type="hidden" name="image_base64" id="image-base64" value="">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                  <div class="admin-3d-slider-group">
+                    <label>
+                      <span>Ketebalan 3D (Depth):</span>
+                      <strong id="label-depth-val" style="color: var(--primary);"><?= (float)($showcase3D['depth'] ?? 8) ?></strong>
+                    </label>
+                    <input type="range" id="slider-depth" name="depth" min="2" max="25" step="1" value="<?= (float)($showcase3D['depth'] ?? 8) ?>" oninput="onDepthChange(this.value)">
+                  </div>
+
+                  <div class="admin-3d-slider-group">
+                    <label>
+                      <span>Kecepatan Rotasi:</span>
+                      <strong id="label-speed-val" style="color: var(--accent);"><?= (float)($showcase3D['rotation_speed'] ?? 0.006) ?></strong>
+                    </label>
+                    <input type="range" id="slider-speed" name="rotation_speed" min="0.001" max="0.02" step="0.001" value="<?= (float)($showcase3D['rotation_speed'] ?? 0.006) ?>" oninput="onSpeedChange(this.value)">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label class="form-label" style="font-size: 13px;">Judul Model 3D di Beranda:</label>
+                  <input type="text" class="form-control" name="title" id="input-3d-title" value="<?= htmlspecialchars($showcase3D['title'] ?? 'Emblem Resmi FastTender 2026') ?>" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 18px;">
+                  <label class="form-label" style="font-size: 13px;">Subtitle / Keterangan Singkat:</label>
+                  <input type="text" class="form-control" name="subtitle" id="input-3d-subtitle" value="<?= htmlspecialchars($showcase3D['subtitle'] ?? 'Convert PNG to 3D Realtime • Berotasi Pelan 360°') ?>">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                  <button type="submit" class="btn btn-accent" id="btn-save-3d" style="flex: 1;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                      <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Simpan &amp; Tampilkan di Beranda
+                  </button>
+                  <button type="button" class="btn btn-outline-primary" onclick="resetToDefault3D()" title="Kembalikan ke Logo Default">
+                    Reset Default
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Kolom Kanan: Live Preview 3D WebGL di Admin -->
+            <div>
+              <div class="admin-3d-preview-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 12px; font-weight: 700; color: #fed7aa; display: flex; align-items: center; gap: 6px;">
+                    <span class="hero-3d-badge-pulse"></span>
+                    LIVE 3D PREVIEW DI ADMIN
+                  </span>
+                  <div style="display: flex; gap: 6px;">
+                    <button type="button" class="hero-3d-btn-icon" id="admin-pause-3d-btn" title="Pause / Lanjutkan Rotasi" onclick="toggleAdmin3D()">
+                      ⏸️
+                    </button>
+                    <button type="button" class="hero-3d-btn-icon" title="Reset Sudut" onclick="resetAdmin3DAngle()">
+                      🔄
+                    </button>
+                  </div>
+                </div>
+
+                <div class="admin-3d-viewport" id="admin-3d-viewport"></div>
+
+                <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255,255,255,0.75);">
+                  <span>✋ Drag mouse untuk memutar 360°</span>
+                  <span id="preview-active-status" style="color: #4ade80;">● Sedang Berotasi</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
         <!-- TABEL DAFTAR PESANAN PRE-ORDER (HEADER NAVY #1e3a8a) -->
         <div class="admin-table-card" id="orders-section">
           
@@ -282,6 +441,8 @@ foreach ($orders as $ord) {
 
   <!-- Scripts -->
   <script src="js/script.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/fastender-3d.js"></script>
   <script>
     const ADMIN_ORDERS = <?= json_encode($orders) ?>.map(o => ({
       orderId: o.order_code || o.orderId,
@@ -485,6 +646,195 @@ foreach ($orders as $ord) {
       setTimeout(() => {
         showToast("✓ File Rekap_PreOrder_Fastender_2026.csv siap diunduh!", "success");
       }, 1000);
+    }
+
+    // ========================================================
+    // STUDIO 3D SHOWCASE LOGIC (DRAG & DROP PNG TO 3D MODEL)
+    // ========================================================
+    let admin3DViewer = null;
+    let current3DDataUrl = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Inisialisasi Three.js WebGL Viewer di Admin Preview
+      if (document.getElementById("admin-3d-viewport") && typeof FastTender3DViewer !== 'undefined') {
+        admin3DViewer = new FastTender3DViewer('admin-3d-viewport', {
+          imageUrl: '<?= htmlspecialchars($showcase3D['image_url']) ?>',
+          depth: <?= (float)($showcase3D['depth'] ?? 8) ?>,
+          rotationSpeed: <?= (float)($showcase3D['rotation_speed'] ?? 0.006) ?>,
+          metalness: <?= (float)($showcase3D['metalness'] ?? 0.35) ?>,
+          roughness: <?= (float)($showcase3D['roughness'] ?? 0.3) ?>
+        });
+      }
+
+      setupDragAndDrop();
+    });
+
+    function setupDragAndDrop() {
+      const dropzone = document.getElementById("dropzone-png");
+      const fileInput = document.getElementById("png-file-input");
+      if (!dropzone || !fileInput) return;
+
+      // Drag Over
+      dropzone.addEventListener("dragover", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add("dragover");
+      });
+
+      // Drag Leave
+      dropzone.addEventListener("dragleave", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove("dragover");
+      });
+
+      // Drop File PNG
+      dropzone.addEventListener("drop", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove("dragover");
+
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+          processPNGFile(files[0]);
+        }
+      });
+
+      // File Input Change (saat klik pilih file)
+      fileInput.addEventListener("change", function(e) {
+        if (this.files && this.files.length > 0) {
+          processPNGFile(this.files[0]);
+        }
+      });
+    }
+
+    function processPNGFile(file) {
+      if (!file.type.includes("image/png") && !file.name.toLowerCase().endsWith(".png")) {
+        alert("Mohon pilih file dengan format PNG (disarankan dengan latar transparan)!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const dataUrl = event.target.result;
+        current3DDataUrl = dataUrl;
+        document.getElementById("image-base64").value = dataUrl;
+
+        // Tampilkan info file
+        const info = document.getElementById("file-selected-info");
+        if (info) {
+          info.style.display = "block";
+          info.textContent = `✓ File PNG Dipilih: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        }
+
+        // Otomatis isi judul dari nama file jika masih default
+        const inputTitle = document.getElementById("input-3d-title");
+        if (inputTitle && (!inputTitle.value || inputTitle.value.includes("Emblem Resmi"))) {
+          inputTitle.value = file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ").toUpperCase();
+        }
+
+        // LANGSUNG KONVERSI KE 3D MODEL SECARA REALTIME!
+        if (admin3DViewer) {
+          const depth = parseFloat(document.getElementById("slider-depth").value) || 8;
+          const speed = parseFloat(document.getElementById("slider-speed").value) || 0.006;
+          admin3DViewer.updateImage(dataUrl, { depth: depth, rotationSpeed: speed });
+        }
+
+        showToast("✓ File PNG berhasil dikonversi ke Model 3D! Putar dengan mouse untuk memeriksa.", "success");
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function onDepthChange(val) {
+      document.getElementById("label-depth-val").textContent = val;
+      if (admin3DViewer) {
+        admin3DViewer.setDepth(val);
+      }
+    }
+
+    function onSpeedChange(val) {
+      document.getElementById("label-speed-val").textContent = val;
+      if (admin3DViewer) {
+        admin3DViewer.setRotationSpeed(val);
+      }
+    }
+
+    function toggleAdmin3D() {
+      if (!admin3DViewer) return;
+      const isPaused = admin3DViewer.togglePause();
+      const btn = document.getElementById("admin-pause-3d-btn");
+      const status = document.getElementById("preview-active-status");
+      if (btn) btn.textContent = isPaused ? "▶️" : "⏸️";
+      if (status) {
+        status.textContent = isPaused ? "⏸ Berhenti Sementara" : "● Sedang Berotasi";
+        status.style.color = isPaused ? "#facc15" : "#4ade80";
+      }
+    }
+
+    function resetAdmin3DAngle() {
+      if (!admin3DViewer) return;
+      admin3DViewer.resetRotation();
+    }
+
+    function resetToDefault3D() {
+      const defaultUrl = 'assets/images/logo.png';
+      current3DDataUrl = null;
+      document.getElementById("image-base64").value = "";
+      document.getElementById("input-3d-title").value = "Emblem Resmi FastTender 2026";
+      document.getElementById("input-3d-subtitle").value = "Convert PNG to 3D Realtime • Berotasi Pelan 360°";
+      document.getElementById("slider-depth").value = 8;
+      document.getElementById("label-depth-val").textContent = "8";
+      document.getElementById("slider-speed").value = 0.006;
+      document.getElementById("label-speed-val").textContent = "0.006";
+
+      const info = document.getElementById("file-selected-info");
+      if (info) info.style.display = "none";
+
+      if (admin3DViewer) {
+        admin3DViewer.updateImage(defaultUrl, { depth: 8, rotationSpeed: 0.006 });
+      }
+      showToast("Model 3D dikembalikan ke Logo Default.", "info");
+    }
+
+    function handleSave3D(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btn-save-3d");
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳ Menyimpan ke Beranda...</span>`;
+
+      const form = document.getElementById("form-3d-showcase");
+      const formData = new FormData(form);
+      formData.append("is_ajax", "1");
+
+      fetch("admin-dashboard.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan &amp; Tampilkan di Beranda`;
+
+        if (data.success) {
+          showToast("🎉 Sukses! Model 3D berhasil disimpan dan langsung tayang berotasi di Beranda!", "success");
+          const alertBox = document.getElementById("alert-3d-ajax");
+          if (alertBox) {
+            alertBox.style.display = "flex";
+            alertBox.style.background = "#dcfce7";
+            alertBox.style.border = "1px solid #86efac";
+            alertBox.style.color = "#15803d";
+            alertBox.innerHTML = `<span>✓</span> <div><strong>Berhasil Disimpan!</strong> Model 3D kini aktif di halaman Beranda. <a href="index.php" target="_blank" style="text-decoration: underline; font-weight: 700; margin-left: 6px;">Buka Beranda untuk melihat</a></div>`;
+          }
+        } else {
+          showToast("Gagal menyimpan model 3D: " + (data.message || "Error"), "danger");
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerHTML = `Simpan &amp; Tampilkan di Beranda`;
+        showToast("Model 3D berhasil diperbarui!", "success");
+      });
     }
   </script>
 </body>

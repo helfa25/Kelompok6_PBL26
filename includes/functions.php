@@ -512,3 +512,78 @@ function getProductSvgPhp($type) {
             </svg>';
     }
 }
+
+// ----------------------------------------------------
+// 8. PENGELOLAAN 3D SHOWCASE (PNG TO 3D MODEL)
+// ----------------------------------------------------
+define('DATA_SHOWCASE_3D_FILE', __DIR__ . '/../data/showcase_3d.json');
+define('UPLOAD_3D_DIR', __DIR__ . '/../uploads/3d/');
+
+function get3DShowcaseConfig() {
+    if (file_exists(DATA_SHOWCASE_3D_FILE)) {
+        $json = file_get_contents(DATA_SHOWCASE_3D_FILE);
+        $data = json_decode($json, true);
+        if (is_array($data) && !empty($data['image_url'])) {
+            return $data;
+        }
+    }
+    return [
+        'image_url' => 'assets/images/logo.png',
+        'title' => 'Emblem Resmi FastTender 2026',
+        'subtitle' => 'Convert PNG to 3D Realtime • Berotasi Pelan 360°',
+        'depth' => 8,
+        'rotation_speed' => 0.006,
+        'metalness' => 0.35,
+        'roughness' => 0.3,
+        'updated_at' => date('Y-m-d H:i:s')
+    ];
+}
+
+function save3DShowcaseConfig($postData, $fileData = null) {
+    if (!is_dir(UPLOAD_3D_DIR)) {
+        mkdir(UPLOAD_3D_DIR, 0777, true);
+    }
+    
+    $current = get3DShowcaseConfig();
+    $imageUrl = $current['image_url'];
+    
+    // Upload via $_FILES
+    if (!empty($fileData['name']) && $fileData['error'] === UPLOAD_ERR_OK) {
+        $ext = strtolower(pathinfo($fileData['name'], PATHINFO_EXTENSION));
+        if ($ext === 'png') {
+            $fileName = 'model_3d_' . time() . '.png';
+            $targetPath = UPLOAD_3D_DIR . $fileName;
+            if (move_uploaded_file($fileData['tmp_name'], $targetPath)) {
+                $imageUrl = 'uploads/3d/' . $fileName;
+            }
+        }
+    } 
+    // Atau upload via Base64 DataURL (Drag & Drop AJAX)
+    elseif (!empty($postData['image_base64'])) {
+        $base64 = $postData['image_base64'];
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
+            $data = substr($base64, strpos($base64, ',') + 1);
+            $data = base64_decode($data);
+            if ($data !== false) {
+                $fileName = 'model_3d_' . time() . '.png';
+                file_put_contents(UPLOAD_3D_DIR . $fileName, $data);
+                $imageUrl = 'uploads/3d/' . $fileName;
+            }
+        }
+    }
+    
+    $config = [
+        'image_url' => $imageUrl,
+        'title' => sanitize($postData['title'] ?? ($current['title'] ?? '3D Apparel FastTender')),
+        'subtitle' => sanitize($postData['subtitle'] ?? ($current['subtitle'] ?? 'Desain 3D Pre-Order Terkini')),
+        'depth' => floatval($postData['depth'] ?? 8),
+        'rotation_speed' => floatval($postData['rotation_speed'] ?? 0.006),
+        'metalness' => floatval($postData['metalness'] ?? 0.35),
+        'roughness' => floatval($postData['roughness'] ?? 0.3),
+        'updated_at' => date('Y-m-d H:i:s')
+    ];
+    
+    file_put_contents(DATA_SHOWCASE_3D_FILE, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    return $config;
+}
+

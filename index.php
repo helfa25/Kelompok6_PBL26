@@ -11,6 +11,7 @@ $activePage = 'beranda';
 
 $allProducts = getProductsList();
 $popularProducts = array_slice($allProducts, 0, 4);
+$showcase3D = get3DShowcaseConfig();
 
 include __DIR__ . '/includes/header.php';
 include __DIR__ . '/includes/navbar.php';
@@ -33,7 +34,7 @@ include __DIR__ . '/includes/navbar.php';
           PO Angkatan 2026<br><span>Sudah Dibuka!</span>
         </h1>
         <p class="hero-desc">
-          Wujudkan identitas kebanggaan kelas, jurusan, dan organisasimu bersama Tender Projects (Fastender). Bahan standar distro, gratis konsultasi desain bordir, sistem DP 50%, dan jaminan tepat waktu.
+          Wujudkan identitas kebanggaan kelas, jurusan, dan organisasimu bersama FastTender. Bahan standar distro, gratis konsultasi desain bordir, sistem DP 50%, dan jaminan tepat waktu.
         </p>
         <div class="hero-cta-group">
           <!-- Tombol oranye aksi sesuai spesifikasi figma -->
@@ -51,36 +52,86 @@ include __DIR__ . '/includes/navbar.php';
       </div>
 
       <div class="hero-visual">
-        <div class="hero-card-preview">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span class="badge badge-accent">BATCH 2 CLOSING SOON</span>
-            <span style="font-size: 11px; color: rgba(255,255,255,0.7);">Sisa Kuota: 18 pcs</span>
-          </div>
-          <h3 style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Varsity Angkatan 2026</h3>
-          <p style="font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.4;">Bahan Cotton Fleece 330gsm &amp; Kulit Sintetis Soft Grade A</p>
+        <div class="hero-3d-card">
           
-          <div class="countdown-box">
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-days">05</span>
-              <span class="countdown-label">Hari</span>
+          <!-- Tab Switcher: 3D Preview & Info Batch PO -->
+          <div class="hero-3d-tabs">
+            <button type="button" class="hero-3d-tab active" id="tab-btn-3d" onclick="switchHeroView('3d')">
+              🔮 3D Live Model
+            </button>
+            <button type="button" class="hero-3d-tab" id="tab-btn-batch" onclick="switchHeroView('batch')">
+              ⏳ Info Batch &amp; Kuota
+            </button>
+          </div>
+
+          <!-- VIEW 1: 3D MODEL WEBGL (BEROTASI PELAN) -->
+          <div id="hero-view-3d" style="display: block;">
+            <div class="hero-3d-header">
+              <span class="hero-3d-badge">
+                <span class="hero-3d-badge-pulse"></span>
+                3D ROTATING MODEL
+              </span>
+              <span style="font-size: 11px; color: rgba(255,255,255,0.75);">Three.js WebGL</span>
             </div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-hours">14</span>
-              <span class="countdown-label">Jam</span>
+
+            <!-- 3D Canvas Viewport -->
+            <div class="hero-3d-viewport" id="home-3d-viewport">
+              <!-- Controls Overlay -->
+              <div class="hero-3d-controls">
+                <button type="button" class="hero-3d-btn-icon" id="btn-pause-3d" title="Pause / Putar Rotasi" onclick="toggleHome3DRotation()">
+                  ⏸️
+                </button>
+                <button type="button" class="hero-3d-btn-icon" title="Reset Sudut Pandang" onclick="resetHome3DRotation()">
+                  🔄
+                </button>
+              </div>
+              <div class="hero-3d-hint">
+                ✋ Drag mouse / sentuh layar untuk putar 360°
+              </div>
             </div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-mins">42</span>
-              <span class="countdown-label">Menit</span>
-            </div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-secs">18</span>
-              <span class="countdown-label">Detik</span>
+
+            <div class="hero-3d-meta">
+              <h3 class="hero-3d-title" id="home-3d-title"><?= htmlspecialchars($showcase3D['title']) ?></h3>
+              <p class="hero-3d-subtitle" id="home-3d-subtitle"><?= htmlspecialchars($showcase3D['subtitle']) ?></p>
+              <a href="katalog.php" class="btn btn-accent btn-block btn-sm">
+                Lihat Katalog Pre-Order
+              </a>
             </div>
           </div>
 
-          <a href="detail.php?id=1" class="btn btn-accent btn-block btn-sm" style="margin-top: 16px;">
-            Ikut PO Sekarang
-          </a>
+          <!-- VIEW 2: INFO BATCH & COUNTDOWN -->
+          <div id="hero-view-batch" style="display: none; padding-top: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="badge badge-accent">BATCH 2 CLOSING SOON</span>
+              <span style="font-size: 11px; color: rgba(255,255,255,0.7);">Sisa Kuota: 18 pcs</span>
+            </div>
+            <h3 style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Varsity Angkatan 2026</h3>
+            <p style="font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.4;">Bahan Cotton Fleece 330gsm &amp; Kulit Sintetis Soft Grade A</p>
+            
+            <div class="countdown-box">
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-days">05</span>
+                <span class="countdown-label">Hari</span>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-hours">14</span>
+                <span class="countdown-label">Jam</span>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-mins">42</span>
+                <span class="countdown-label">Menit</span>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-secs">18</span>
+                <span class="countdown-label">Detik</span>
+              </div>
+            </div>
+
+            <a href="detail.php?id=1" class="btn btn-accent btn-block btn-sm" style="margin-top: 16px;">
+              Ikut PO Sekarang
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
@@ -289,7 +340,58 @@ include __DIR__ . '/includes/navbar.php';
   </div>
 </section>
 
+<!-- Three.js Engine & FastTender 3D Viewer -->
+<script src="js/three.min.js"></script>
+<script src="js/fastender-3d.js"></script>
 <script>
+  let home3DViewer = null;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Inisialisasi 3D Model Berotasi Pelan di Beranda
+    home3DViewer = new FastTender3DViewer('home-3d-viewport', {
+      imageUrl: '<?= htmlspecialchars($showcase3D['image_url']) ?>',
+      depth: <?= (float)($showcase3D['depth'] ?? 8) ?>,
+      rotationSpeed: <?= (float)($showcase3D['rotation_speed'] ?? 0.006) ?>,
+      metalness: <?= (float)($showcase3D['metalness'] ?? 0.35) ?>,
+      roughness: <?= (float)($showcase3D['roughness'] ?? 0.3) ?>
+    });
+
+    initCountdown();
+  });
+
+  function toggleHome3DRotation() {
+    if (!home3DViewer) return;
+    const isPaused = home3DViewer.togglePause();
+    const btn = document.getElementById('btn-pause-3d');
+    if (btn) {
+      btn.innerText = isPaused ? '▶️' : '⏸️';
+    }
+  }
+
+  function resetHome3DRotation() {
+    if (!home3DViewer) return;
+    home3DViewer.resetRotation();
+  }
+
+  function switchHeroView(mode) {
+    const view3D = document.getElementById('hero-view-3d');
+    const viewBatch = document.getElementById('hero-view-batch');
+    const tab3D = document.getElementById('tab-btn-3d');
+    const tabBatch = document.getElementById('tab-btn-batch');
+
+    if (mode === '3d') {
+      view3D.style.display = 'block';
+      viewBatch.style.display = 'none';
+      tab3D.classList.add('active');
+      tabBatch.classList.remove('active');
+    } else {
+      view3D.style.display = 'none';
+      viewBatch.style.display = 'block';
+      tab3D.classList.remove('active');
+      tabBatch.classList.add('active');
+    }
+  }
+
   // Countdown Timer Demo
   function initCountdown() {
     let target = new Date().getTime() + (5 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000);
@@ -313,7 +415,6 @@ include __DIR__ . '/includes/navbar.php';
       if (elSecs) elSecs.textContent = String(secs).padStart(2, '0');
     }, 1000);
   }
-  document.addEventListener("DOMContentLoaded", initCountdown);
 </script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

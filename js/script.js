@@ -1,0 +1,648 @@
+/**
+ * FASTENDER - PRE-ORDER E-COMMERCE PLATFORM
+ * Core & Shared Script (script.js)
+ * Vanilla JavaScript (No Framework)
+ */
+
+// ==========================================
+// 1. DATA TEMPLATE PRODUK PRE-ORDER (SAMPLE/DEMO TEMPLATES)
+// ==========================================
+const DEFAULT_SAMPLE_PRODUCTS = [
+  {
+    id: 1,
+    name: "Varsity Jacket Premium Angkatan 2026",
+    subtitle: "Custom Bordir Komputer Nama, NIM, & Logo Jurusan",
+    category: "jaket",
+    categoryName: "Jaket & Varsity",
+    price: 245000,
+    dpPrice: 122500,
+    quotaCurrent: 82,
+    quotaTarget: 100,
+    badge: "PO Terpopuler",
+    batch: "Batch 2 (Tutup 25 Okt)",
+    description: "Varsity jacket berbahan Fleece Cotton tebal 330gsm kombinasi kulit sintetis premium pada lengan. Dilengkapi furing quilting diamond yang hangat dan nyaman, kancing snap metal anti karat, dan bordir komputer kerapatan tinggi.",
+    specs: ["Bahan Badan: Cotton Fleece 330gsm", "Bahan Lengan: Oscar Leather Soft Grade A", "Bordir: 4 Titik Bordir Komputer Full HD", "Furing: Quilting Diamond Dacron 4oz", "Estimasi Produksi: 18 - 21 Hari"],
+    sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
+    colors: ["Navy - White", "Black - Grey", "Maroon - Cream"],
+    iconType: "varsity"
+  },
+  {
+    id: 2,
+    name: "Kemeja PDH Drill Custom Bordir Logo",
+    subtitle: "Bahan American Drill Original 1919 Tebal & Adem",
+    category: "pdh",
+    categoryName: "Kemeja PDH",
+    price: 135000,
+    dpPrice: 67500,
+    quotaCurrent: 64,
+    quotaTarget: 80,
+    badge: "Bordir Rapih",
+    batch: "Batch 1 (Tutup 20 Okt)",
+    description: "Kemeja PDH/PDL resmi organisasi dan angkatan. Menggunakan bahan American Drill 1919 asli yang tidak berbulu dan adem dipakai seharian. Jahitan rantai ganda kuat standar konveksi profesional.",
+    specs: ["Bahan: Original American Drill 1919", "Bordir: Komputer Tajam 3 Titik", "Jahitan: Rantai Tiga Benang Kuat", "Kancing: Eksklusif Emboss", "Estimasi Produksi: 14 - 17 Hari"],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Navy Blue", "Hitam Solid", "Abu Khaki"],
+    iconType: "shirt"
+  },
+  {
+    id: 3,
+    name: "Hoodie Heavyweight Fleece 330gsm 2026",
+    subtitle: "Double Layered Hood dengan Sablon High Density",
+    category: "hoodie",
+    categoryName: "Hoodie & Sweatshirt",
+    price: 185000,
+    dpPrice: 92500,
+    quotaCurrent: 92,
+    quotaTarget: 100,
+    badge: "Sisa 8 Kuota",
+    batch: "Batch 3 (Segera Tutup)",
+    description: "Hoodie kasual angkatan dengan bahan Cotton Fleece heavyweight tebal tanpa campuran poliester kasar. Bagian dalam lembut, saku kanguru presisi, dan tali hoodie anyaman tebal.",
+    specs: ["Bahan: 100% Cotton Fleece 330gsm", "Sablon: Plastisol High Density Timbul", "Hoodie: Double Layer Tebal", "Rib: Elastis Spandex Anti Melar", "Estimasi Produksi: 14 Hari"],
+    sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
+    colors: ["Deep Navy", "Jet Black", "Forest Green"],
+    iconType: "hoodie"
+  },
+  {
+    id: 4,
+    name: "T-Shirt Cotton Combed 24s Sablon Plastisol",
+    subtitle: "Kaos Makrab & Event Angkatan Nyaman & Sejuk",
+    category: "kaos",
+    categoryName: "Kaos Angkatan",
+    price: 95000,
+    dpPrice: 47500,
+    quotaCurrent: 140,
+    quotaTarget: 150,
+    badge: "Best Seller",
+    batch: "Batch 1 (Tutup 30 Okt)",
+    description: "Kaos angkatan yang pas untuk kegiatan santai, makrab, atau gathering. Terbuat dari katun combed 24s reaktif gramasi pas, menyerap keringat maksimal, dan disablon dengan tinta plastisol premium.",
+    specs: ["Bahan: Cotton Combed 24s Reaktif", "Sablon: Plastisol Curing Oven Glossy", "Jahitan: Standar Distro Rantai Pundak", "Model: Reguler Fit Unisex", "Estimasi Produksi: 10 - 12 Hari"],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Biru Navy", "Hitam", "Putih", "Sage Green"],
+    iconType: "tshirt"
+  },
+  {
+    id: 5,
+    name: "Windbreaker Jacket Taslan Waterproof",
+    subtitle: "Jaket Outdoor Angkatan Tahan Angin & Gerimis",
+    category: "jaket",
+    categoryName: "Jaket & Varsity",
+    price: 195000,
+    dpPrice: 97500,
+    quotaCurrent: 45,
+    quotaTarget: 60,
+    badge: "Tahan Air",
+    batch: "Batch 1 (Tutup 28 Okt)",
+    description: "Jaket outdoor angkatan yang stylish dan fungsional. Material Taslan balon coating tebal yang tahan terpaan angin malam dan percikan hujan, dilapisi furing jaring mesh sejuk.",
+    specs: ["Bahan: Taslan ZN Coating Waterproof", "Furing: Breathable Mesh Net", "Resleting: YKK Water Repellent", "Hoodie: Bisa dilipat ke kerah", "Estimasi Produksi: 16 - 18 Hari"],
+    sizes: ["M", "L", "XL", "XXL"],
+    colors: ["Navy - Dark Grey", "Full Black"],
+    iconType: "windbreaker"
+  },
+  {
+    id: 6,
+    name: "Tote Bag Canvas Premium & Enamel Pin Set",
+    subtitle: "Merchandise Kit Eksklusif Angkatan 2026",
+    category: "merch",
+    categoryName: "Merchandise & Aksesoris",
+    price: 55000,
+    dpPrice: 27500,
+    quotaCurrent: 88,
+    quotaTarget: 100,
+    badge: "Min. 12 Pcs",
+    batch: "Batch 2 (Tutup 22 Okt)",
+    description: "Tote bag bahan kanvas marsoto tebal dengan resleting penutup dan saku dalam, dipadukan dengan enamel pin logam berkilau berlogo resmi angkatan.",
+    specs: ["Bahan: Kanvas Marsoto 14oz Tebal", "Ukuran: 38 x 35 x 8 cm", "Sablon: Manual Rubber Solid", "Bonus: 1 Enamel Pin Logam Emboss", "Estimasi Produksi: 10 Hari"],
+    sizes: ["All Size"],
+    colors: ["Navy Blue", "Broken White", "Black"],
+    iconType: "totebag"
+  },
+  {
+    id: 7,
+    name: "Lanyard Printing Tissue & Card Holder Kulit",
+    subtitle: "Paket ID Card Eksklusif Kepanitiaan & Angkatan",
+    category: "merch",
+    categoryName: "Merchandise & Aksesoris",
+    price: 25000,
+    dpPrice: 12500,
+    quotaCurrent: 210,
+    quotaTarget: 250,
+    badge: "Paket Hemat",
+    batch: "Batch 1 (Tutup 25 Okt)",
+    description: "Tali lanyard bahan tissue super lembut 2cm cetak sublimasi 2 sisi tajam tanpa luntur, dilengkapi kait oval tebal, stopper putar, dan holder kartu kulit sintetis.",
+    specs: ["Bahan: Tissue Lembut 2cm", "Cetak: Sublimasi Full Color Anti Pudar", "Aksesoris: Stopper & Hook Besi Tebal", "Holder: Kulit Sintetis 2 Slot", "Estimasi Produksi: 7 Hari"],
+    sizes: ["Standar (90 cm)"],
+    colors: ["Navy Blue", "Hitam Gold"],
+    iconType: "lanyard"
+  },
+  {
+    id: 8,
+    name: "Polo Shirt Lacoste Pique Bordir Rapih",
+    subtitle: "Kaos Berkerah Formal Elegan untuk Angkatan",
+    category: "kaos",
+    categoryName: "Kaos Angkatan",
+    price: 115000,
+    dpPrice: 57500,
+    quotaCurrent: 52,
+    quotaTarget: 70,
+    badge: "Bahan Adem",
+    batch: "Batch 2 (Tutup 27 Okt)",
+    description: "Polo shirt bahan Lacoste CVC Pique berpori rapi, adem, dan menyerap keringat. Kerah rajut tidak mudah melinting dan bordir komputer presisi tinggi di dada dan lengan.",
+    specs: ["Bahan: Lacoste Cotton CVC 24s", "Kerah: Rajut Pique Elastis", "Bordir: 2 Titik Komputer", "Kancing: 2 Lubang Senada", "Estimasi Produksi: 14 Hari"],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Navy", "Hitam", "Maroon", "Putih"],
+    iconType: "polo"
+  }
+];
+
+// ==========================================
+// 1B. SISTEM PENYIMPANAN PRODUK & MODE KOSONGAN (UNTUK INPUT ADMIN)
+// ==========================================
+const PRODUCTS_STORAGE_KEY = "fastender_products";
+
+function getStoredProducts() {
+  const raw = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+  if (raw === null) {
+    // Mode Default: KOSONGAN (Empty Space) sesuai permintaan agar diisi melalui Halaman Admin
+    return [];
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveStoredProducts(products) {
+  localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+}
+
+function getAllProducts() {
+  const stored = getStoredProducts();
+  return stored;
+}
+
+// Helper untuk mengisi contoh demo instan / mengosongkan kembali
+function loadDemoProducts() {
+  saveStoredProducts(DEFAULT_SAMPLE_PRODUCTS);
+  location.reload();
+}
+
+function clearAllProducts() {
+  saveStoredProducts([]);
+  location.reload();
+}
+
+// Fallback variabel global untuk kompatibilitas
+const PRODUCTS_DATA = DEFAULT_SAMPLE_PRODUCTS;
+
+// ==========================================
+// 2. HELPER FORMAT RUPIAH & ICONS SVG
+// ==========================================
+function formatRupiah(amount) {
+  return "Rp " + Number(amount).toLocaleString("id-ID");
+}
+
+function getProductSvg(type, color = "#1e3a8a") {
+  // Return styled SVG illustrations for accurate, crisp visualization
+  switch (type) {
+    case "varsity":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#eff6ff"/>
+          <path d="M45 42L80 56L115 42L135 68L120 82L112 74V130H48V74L40 82L25 68L45 42Z" fill="#1e3a8a"/>
+          <path d="M45 42L25 68L40 82L48 74V60L45 42Z" fill="#f97316"/>
+          <path d="M115 42L135 68L120 82L112 74V60L115 42Z" fill="#f97316"/>
+          <path d="M78 55V130H82V55H78Z" fill="#ffffff" opacity="0.4"/>
+          <circle cx="80" cy="75" r="2.5" fill="#f97316"/>
+          <circle cx="80" cy="90" r="2.5" fill="#f97316"/>
+          <circle cx="80" cy="105" r="2.5" fill="#f97316"/>
+          <circle cx="80" cy="120" r="2.5" fill="#f97316"/>
+          <text x="60" y="80" font-family="Poppins, sans-serif" font-weight="800" font-size="14" fill="#ffffff">26</text>
+        </svg>
+      `;
+    case "shirt":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#f0fdf4"/>
+          <path d="M48 38L80 48L112 38L130 62L116 74L108 68V132H52V68L44 74L30 62L48 38Z" fill="#1e3a8a"/>
+          <path d="M68 38L80 54L92 38H68Z" fill="#f8fafc"/>
+          <rect x="58" y="72" width="16" height="18" rx="2" fill="#172554"/>
+          <circle cx="80" cy="70" r="2" fill="#cbd5e1"/>
+          <circle cx="80" cy="85" r="2" fill="#cbd5e1"/>
+          <circle cx="80" cy="100" r="2" fill="#cbd5e1"/>
+          <circle cx="80" cy="115" r="2" fill="#cbd5e1"/>
+          <path d="M79 48V132H81V48H79Z" fill="#ffffff" opacity="0.3"/>
+        </svg>
+      `;
+    case "hoodie":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#f8fafc"/>
+          <ellipse cx="80" cy="40" rx="26" ry="16" fill="#172554"/>
+          <path d="M46 44L80 50L114 44L134 74L118 84L110 76V130H50V76L42 84L26 74L46 44Z" fill="#1e3a8a"/>
+          <path d="M60 100H100L96 124H64L60 100Z" fill="#172554"/>
+          <path d="M74 54V76M86 54V76" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="80" y="85" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="10" fill="#ffffff" letter-spacing="1">FASTENDER</text>
+        </svg>
+      `;
+    case "tshirt":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#fff7ed"/>
+          <path d="M52 40L80 48L108 40L126 62L112 72L106 66V130H54V66L48 72L34 62L52 40Z" fill="#1e3a8a"/>
+          <path d="M70 40C70 46 90 46 90 40Z" fill="#fff7ed"/>
+          <rect x="65" y="70" width="30" height="20" rx="3" fill="#f97316"/>
+          <text x="80" y="84" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="8" fill="#ffffff">PO 2026</text>
+        </svg>
+      `;
+    case "windbreaker":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#f0f9ff"/>
+          <path d="M46 42L80 50L114 42L132 68L118 78L110 72V132H50V72L42 78L28 68L46 42Z" fill="#0f172a"/>
+          <path d="M50 72L80 90L110 72V132H50V72Z" fill="#1e3a8a"/>
+          <line x1="80" y1="50" x2="80" y2="132" stroke="#f97316" stroke-width="2.5"/>
+        </svg>
+      `;
+    case "totebag":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#fefce8"/>
+          <path d="M60 60V35C60 26 100 26 100 35V60" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/>
+          <rect x="45" y="55" width="70" height="80" rx="6" fill="#1e3a8a"/>
+          <circle cx="80" cy="95" r="14" fill="#f97316"/>
+          <text x="80" y="99" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="11" fill="#ffffff">PO</text>
+        </svg>
+      `;
+    case "lanyard":
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#fdf4ff"/>
+          <path d="M60 20L78 80H82L100 20" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/>
+          <rect x="76" y="80" width="8" height="10" rx="2" fill="#f97316"/>
+          <circle cx="80" cy="94" r="4" fill="#94a3b8"/>
+          <rect x="62" y="98" width="36" height="48" rx="4" fill="#172554"/>
+          <rect x="68" y="106" width="24" height="14" rx="2" fill="#ffffff"/>
+          <line x1="68" y1="126" x2="92" y2="126" stroke="#f97316" stroke-width="2"/>
+        </svg>
+      `;
+    default:
+      return `
+        <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="160" height="160" rx="16" fill="#eff6ff"/>
+          <path d="M52 40L80 48L108 40L126 62L112 72L106 66V130H54V66L48 72L34 62L52 40Z" fill="#1e3a8a"/>
+        </svg>
+      `;
+  }
+}
+
+// ==========================================
+// 3. CART SYSTEM (LOCALSTORAGE)
+// ==========================================
+const CART_STORAGE_KEY = "fastender_po_cart";
+
+function getCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.error("Gagal membaca cart dari localStorage", e);
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    updateCartBadge();
+  } catch (e) {
+    console.error("Gagal menyimpan cart ke localStorage", e);
+  }
+}
+
+function addToCart(productId, quantity = 1, size = "L", color = "", customText = "") {
+  const allProds = getAllProducts();
+  let product = allProds.find(p => p.id === Number(productId));
+  if (!product) {
+    product = DEFAULT_SAMPLE_PRODUCTS.find(p => p.id === Number(productId));
+  }
+  if (!product) return false;
+
+  const cart = getCart();
+  const existingIndex = cart.findIndex(item => 
+    item.id === product.id && item.size === size && item.color === color && item.customText === customText
+  );
+
+  const thumbImg = (product.images && product.images.length > 0) ? product.images[0] : null;
+
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += Number(quantity);
+    if (!cart[existingIndex].image && thumbImg) {
+      cart[existingIndex].image = thumbImg;
+    }
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      categoryName: product.categoryName,
+      price: product.price,
+      dpPrice: product.dpPrice,
+      iconType: product.iconType,
+      image: thumbImg,
+      size: size || (product.sizes ? product.sizes[0] : "All Size"),
+      color: color || (product.colors ? product.colors[0] : "Standar"),
+      customText: customText,
+      quantity: Number(quantity)
+    });
+  }
+
+  saveCart(cart);
+  showToast(`"${product.name}" berhasil ditambahkan ke keranjang!`, "success");
+  return true;
+}
+
+function updateCartBadge() {
+  const cart = getCart();
+  const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const badgeEls = document.querySelectorAll(".cart-badge");
+  badgeEls.forEach(badge => {
+    badge.textContent = totalCount;
+    badge.style.display = totalCount > 0 ? "flex" : "none";
+  });
+}
+
+// ==========================================
+// 4. TOAST NOTIFICATION SYSTEM
+// ==========================================
+function showToast(message, type = "info") {
+  let container = document.querySelector(".toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.className = "toast-container";
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      ${type === 'success' 
+        ? '<polyline points="20 6 9 17 4 12"></polyline>' 
+        : '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>'}
+    </svg>
+    <span>${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(100%)";
+    toast.style.transition = "all 0.3s ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ==========================================
+// 5. RENDER PRODUCT CARD HELPER
+// ==========================================
+function renderProductCard(product) {
+  const quotaPercent = Math.min(100, Math.round((product.quotaCurrent / product.quotaTarget) * 100));
+  const hasImages = product.images && product.images.length > 0;
+  const imageElement = hasImages
+    ? `<img src="${product.images[0]}" alt="${product.name}" class="product-thumb">`
+    : `<div style="width: 100%; height: 100%; padding: 20px;">${getProductSvg(product.iconType)}</div>`;
+
+  return `
+    <article class="product-card" data-id="${product.id}">
+      <div class="product-thumb-wrapper">
+        <span class="product-card-badge">${product.badge}</span>
+        <span class="product-batch-tag">${product.batch.split(' ')[0]}</span>
+        ${imageElement}
+      </div>
+      <div class="product-content">
+        <span class="product-category">${product.categoryName}</span>
+        <h3 class="product-title" title="${product.name}">${product.name}</h3>
+        
+        <div class="po-quota-box">
+          <div class="po-quota-info">
+            <span>Kuota Terisi: <strong>${product.quotaCurrent}/${product.quotaTarget} pcs</strong></span>
+            <span>${quotaPercent}%</span>
+          </div>
+          <div class="po-progress-bar">
+            <div class="po-progress-fill" style="width: ${quotaPercent}%;"></div>
+          </div>
+        </div>
+
+        <div class="product-footer">
+          <div class="product-price-row">
+            <span class="product-price">${formatRupiah(product.price)}</span>
+            <span class="product-dp-label">DP: ${formatRupiah(product.dpPrice)}</span>
+          </div>
+          <!-- Tombol 'Detail Produk' bergaris tepi (outline) oranye sesuai spesifikasi figma -->
+          <a href="detail.php?id=${product.id}" class="btn btn-outline-accent btn-block">
+            Detail Produk
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+// ==========================================
+// 5B. RENDER SPACE KOSONGAN (EMPTY SLOTS HELPER)
+// ==========================================
+function renderEmptyProductSlot(slotIndex = 1) {
+  return `
+    <div class="empty-slot-card">
+      <span class="empty-slot-badge">Slot Kosong #${slotIndex}</span>
+      <div class="empty-slot-icon">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 4"></rect>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+      </div>
+      <h3 class="empty-slot-title">Space Kosong Produk PO</h3>
+      <p class="empty-slot-desc">Slot ini disiapkan untuk data produk yang nanti diinput melalui Halaman Admin.</p>
+      <a href="admin-input-produk.php" class="btn btn-outline-accent btn-sm">
+        + Input di Admin
+      </a>
+    </div>
+  `;
+}
+
+function renderEmptySlotBanner() {
+  return `
+    <div class="empty-slot-banner">
+      <div class="empty-slot-banner-text">
+        <div style="font-size: 24px;">📝</div>
+        <div>
+          <h4>Space Produk Masih Kosong (Menunggu Input Admin)</h4>
+          <p>Belum ada produk PO yang diterbitkan. Anda dapat menginputkannya melalui Halaman Admin.</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="admin-input-produk.php" class="btn btn-accent btn-sm">
+          + Buka Halaman Input Admin
+        </a>
+        <button type="button" class="btn btn-outline-primary btn-sm" onclick="loadDemoProducts()">
+          ⚡ Muat Contoh Demo
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================
+// 6. GLOBAL INITIALIZATION (DOMContentLoaded)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Update badge saat halaman dimuat
+  updateCartBadge();
+
+  // Mobile menu toggle
+  const navToggle = document.querySelector(".nav-toggle-btn");
+  const navMenu = document.querySelector(".navbar-menu");
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+  }
+
+  // Inisialisasi grid produk di Beranda jika ada elemennya
+  const popularGrid = document.getElementById("popular-products-grid");
+  if (popularGrid) {
+    const allStored = getAllProducts();
+    const bannerContainer = document.getElementById("popular-empty-banner");
+    
+    if (allStored.length === 0) {
+      if (bannerContainer) bannerContainer.innerHTML = renderEmptySlotBanner();
+      // Render 4 space kosongan per permintaan user
+      popularGrid.innerHTML = [1, 2, 3, 4].map(renderEmptyProductSlot).join("");
+    } else {
+      if (bannerContainer) bannerContainer.innerHTML = "";
+      const popularProducts = allStored.slice(0, 4);
+      popularGrid.innerHTML = popularProducts.map(renderProductCard).join("");
+    }
+  }
+
+  // Inisialisasi modal login / daftar
+  setupAuthModal();
+});
+
+// ==========================================
+// 7. MODAL LOGIN / DAFTAR
+// ==========================================
+function setupAuthModal() {
+  const authBtns = document.querySelectorAll(".auth-trigger-btn");
+  if (!authBtns.length) return;
+
+  let modalOverlay = document.getElementById("auth-modal");
+  if (!modalOverlay) {
+    modalOverlay = document.createElement("div");
+    modalOverlay.id = "auth-modal";
+    modalOverlay.className = "modal-overlay";
+    modalOverlay.innerHTML = `
+      <div class="modal-dialog">
+        <button class="modal-close-btn" aria-label="Tutup">&times;</button>
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div class="brand-icon" style="margin: 0 auto 12px; width: 44px; height: 44px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 22px; color: var(--primary); font-weight: 700;">Masuk ke Fastender</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">Pantau progress pesanan Pre-Order angkatanmu</p>
+        </div>
+        <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Email atau No. WhatsApp</label>
+            <input type="text" class="form-control" placeholder="contoh: 081234567890" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kata Sandi</label>
+            <input type="password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 20px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" checked style="accent-color: var(--accent);"> Ingat saya
+            </label>
+            <a href="#" style="color: var(--accent); font-weight: 600;">Lupa Sandi?</a>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block btn-lg" style="margin-bottom: 12px;">
+            Masuk Sekarang
+          </button>
+          <button type="button" onclick="closeAuthModal()" class="btn btn-outline-primary btn-block">
+            Tutup
+          </button>
+        </form>
+        <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 18px;">
+          Belum punya akun? <a href="#" onclick="showToast('Fitur pendaftaran akun dibuka otomatis saat checkout!', 'info'); return false;" style="color: var(--accent); font-weight: 700;">Daftar di sini</a>
+        </p>
+      </div>
+    `;
+    document.body.appendChild(modalOverlay);
+  }
+
+  authBtns.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modalOverlay.classList.add("active");
+    });
+  });
+
+  const closeBtn = modalOverlay.querySelector(".modal-close-btn");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeAuthModal);
+  }
+
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeAuthModal();
+  });
+}
+
+function closeAuthModal() {
+  const modalOverlay = document.getElementById("auth-modal");
+  if (modalOverlay) modalOverlay.classList.remove("active");
+}
+
+function handleAuthSubmit(e) {
+  e.preventDefault();
+  closeAuthModal();
+  showToast("Selamat datang kembali! Anda berhasil masuk.", "success");
+}
+
+// ==========================================
+// 8. HERO COUNTDOWN TIMER
+// ==========================================
+function initCountdown() {
+  const dayEl = document.getElementById("cd-days");
+  const hourEl = document.getElementById("cd-hours");
+  const minEl = document.getElementById("cd-mins");
+  const secEl = document.getElementById("cd-secs");
+
+  if (!dayEl || !hourEl || !minEl || !secEl) return;
+
+  // Target 5 hari dari sekarang
+  let totalSeconds = (5 * 24 * 3600) + (14 * 3600) + (42 * 60) + 18;
+
+  setInterval(() => {
+    if (totalSeconds <= 0) return;
+    totalSeconds--;
+
+    const d = Math.floor(totalSeconds / (24 * 3600));
+    const h = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+
+    dayEl.textContent = String(d).padStart(2, "0");
+    hourEl.textContent = String(h).padStart(2, "0");
+    minEl.textContent = String(m).padStart(2, "0");
+    secEl.textContent = String(s).padStart(2, "0");
+  }, 1000);
+}
+
+// Jalankan countdown saat load
+document.addEventListener("DOMContentLoaded", initCountdown);
+

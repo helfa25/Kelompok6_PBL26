@@ -20,7 +20,7 @@ $adminTitle = $adminTitle ?? 'Dashboard';
     <div class="admin-profile">
       <div class="admin-avatar">AD</div>
       <div class="admin-info">
-        <div class="admin-name">Admin Fastender</div>
+        <div class="admin-name">Admin FastTender</div>
         <div class="admin-role">Super Administrator</div>
       </div>
     </div>

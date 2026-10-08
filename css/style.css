@@ -2519,3 +2519,469 @@ button {
   padding: 2px 8px;
   border-radius: var(--radius-pill);
 }
+
+/* ====================================================
+   ALL-DEVICE RESPONSIVE MASTER SYSTEM
+   Mendukung Mobile (320px-576px), Tablet (768px-991px),
+   Laptop (992px-1199px), Desktop (1200px+), dan Layar Sentuh
+   ==================================================== */
+
+/* --- 1. Global Box-Sizing & Viewport Fixes --- */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, svg, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- 2. Desktop & Ultra-Wide (1200px+) --- */
+@media (min-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+}
+
+/* --- 3. Medium Laptops (992px - 1199px) --- */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .katalog-layout {
+    grid-template-columns: 260px 1fr;
+    gap: 22px;
+  }
+}
+
+/* --- 4. Tablets & iPads (768px - 991px) --- */
+@media (max-width: 991px) {
+  .container {
+    padding: 0 18px;
+  }
+  
+  .katalog-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .btn-mobile-filter-toggle {
+    display: inline-flex !important;
+    margin-bottom: 14px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .filter-sidebar {
+    display: none;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .filter-sidebar.show-mobile {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+
+  .hero-banner {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 28px;
+  }
+
+  .hero-visual {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+/* --- 5. Mobile Phones & Smartphones (<= 768px) --- */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px;
+  }
+
+  /* Mencegah Safari iOS auto-zoom ketika klik form input */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Navbar Mobile Touch Header */
+  .navbar .container {
+    height: 60px;
+    padding: 0 14px;
+  }
+
+  .brand-logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-text {
+    font-size: 18px;
+  }
+
+  .navbar-actions .btn-accent {
+    display: none; /* Disembunyikan dari bar utama agar tidak sesak; ditampilkan di drawer */
+  }
+
+  .nav-toggle-btn {
+    display: block;
+    font-size: 24px;
+    color: #ffffff;
+    padding: 6px;
+    line-height: 1;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(30, 58, 138, 0.98);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+    z-index: 1001;
+    transform: translateY(-125%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-bottom: 2px solid var(--accent);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .navbar-menu.active {
+    transform: translateY(0);
+  }
+
+  .navbar-link {
+    display: block;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .navbar-link.active,
+  .navbar-link:hover {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  /* Hero Section Mobile */
+  .hero-banner {
+    padding: 24px 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-title {
+    font-size: clamp(22px, 5.5vw, 30px);
+    line-height: 1.25;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hero-3d-card {
+    padding: 14px;
+  }
+
+  .hero-3d-viewport {
+    height: 230px;
+  }
+
+  /* Features & Steps */
+  .features-grid,
+  .po-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Marketplace Banner */
+  .marketplace-hero-banner {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .marketplace-hero-banner h2 {
+    font-size: 18px;
+  }
+
+  .marketplace-hero-banner p {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .marketplace-banner-badges {
+    gap: 6px;
+  }
+
+  .banner-feature-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  /* Cart & Checkout Layout */
+  .cart-layout,
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cart-items-card,
+  .cart-summary-card,
+  .form-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .cart-item {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+  }
+
+  .cart-item-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cart-item-subtotal {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 8px;
+  }
+
+  .form-grid-2,
+  .radio-card-group {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Track Order */
+  .track-search-card {
+    padding: 20px 14px;
+  }
+
+  .track-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .track-form .btn {
+    width: 100%;
+  }
+
+  .order-meta-box {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .timeline {
+    padding-left: 28px;
+  }
+
+  /* Detail Layout */
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .detail-actions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* --- 6. Compact Smartphones (<= 576px) --- */
+@media (max-width: 576px) {
+  /* 2-Column Marketplace Grid on Mobile (Shopee/Tokopedia format) */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .product-card {
+    border-radius: var(--radius-md);
+  }
+
+  .product-thumb-wrapper {
+    aspect-ratio: 1 / 1;
+  }
+
+  .product-card-badge {
+    top: 6px;
+    left: 6px;
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .product-batch-tag {
+    top: 6px;
+    right: 6px;
+    font-size: 8px;
+    padding: 2px 5px;
+  }
+
+  .product-content {
+    padding: 10px 8px;
+  }
+
+  .product-rating-row {
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .product-rating-row .sold-count {
+    display: none;
+  }
+
+  .product-title {
+    font-size: 12px;
+    height: 32px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .po-quota-box {
+    margin: 4px 0 8px;
+  }
+
+  .po-quota-info {
+    font-size: 9px;
+  }
+
+  .product-price {
+    font-size: 14px;
+  }
+
+  .product-strike-price {
+    font-size: 10px;
+  }
+
+  .product-dp-tag {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+
+  .marketplace-card-actions {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .btn-cart-quick,
+  .btn-buy-now {
+    padding: 7px 6px;
+    font-size: 11px;
+    width: 100%;
+  }
+
+  .btn-cart-quick span {
+    font-size: 11px;
+  }
+
+  .link-detail-view {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  /* Quick Checkout Modal Bottom Sheet */
+  .quick-co-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .quick-co-modal-content {
+    max-width: 100vw;
+    border-radius: 20px 20px 0 0;
+    max-height: 85dvh;
+  }
+
+  .quick-co-body {
+    padding: 16px 14px;
+  }
+
+  .quick-co-footer {
+    padding: 12px 14px;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 8px;
+  }
+
+  .quick-co-footer .btn {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  /* Sticky Cart Bar Mobile Full Width */
+  .sticky-cart-bar {
+    left: 10px;
+    right: 10px;
+    bottom: 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    justify-content: space-between;
+  }
+}
+
+/* --- 7. Ultra-Narrow Smartphones (<= 360px) --- */
+@media (max-width: 360px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-text {
+    font-size: 16px;
+  }
+
+  .navbar .container {
+    padding: 0 10px;
+  }
+}
+

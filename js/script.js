@@ -553,12 +553,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Update badge saat halaman dimuat
   updateCartBadge();
 
-  // Mobile menu toggle
+  // Mobile menu toggle & outside-click closer
   const navToggle = document.querySelector(".nav-toggle-btn");
   const navMenu = document.querySelector(".navbar-menu");
   if (navToggle && navMenu) {
-    navToggle.addEventListener("click", () => {
+    navToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
       navMenu.classList.toggle("active");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navMenu.classList.remove("active");
+      }
+    });
+
+    navMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+      });
     });
   }
 

@@ -82,11 +82,16 @@ include __DIR__ . '/includes/navbar.php';
       </button>
     </div>
 
+    <!-- TOMBOL FILTER MOBILE (Hanya tampil di tablet & smartphone) -->
+    <button type="button" class="btn btn-outline-primary btn-mobile-filter-toggle" onclick="toggleFilterSidebar()" style="display: none;">
+      ⚙️ Buka Filter &amp; Rentang Harga
+    </button>
+
     <!-- 2 KOLOM LAYOUT: SIDEBAR FILTER & PRODUCT GRID -->
     <div class="katalog-layout">
       
       <!-- KOLOM KIRI: SIDEBAR FILTER -->
-      <aside class="filter-sidebar">
+      <aside class="filter-sidebar" id="filter-sidebar">
         <div class="filter-header">
           <h3 class="filter-title">Filter Pencarian</h3>
           <button type="button" id="reset-filter-btn" style="font-size: 12px; color: var(--accent); font-weight: 600; cursor: pointer; background: none; border: none;">
@@ -611,6 +616,18 @@ include __DIR__ . '/includes/navbar.php';
       stickyBar.style.display = "flex";
     } else {
       stickyBar.style.display = "none";
+    }
+  }
+
+  // 5. TOGGLE MOBILE FILTER SIDEBAR
+  function toggleFilterSidebar() {
+    const sidebar = document.getElementById("filter-sidebar");
+    const btn = document.querySelector(".btn-mobile-filter-toggle");
+    if (sidebar) {
+      const isOpen = sidebar.classList.toggle("show-mobile");
+      if (btn) {
+        btn.textContent = isOpen ? "▲ Tutup Filter Pencarian" : "⚙️ Buka Filter & Rentang Harga";
+      }
     }
   }
 

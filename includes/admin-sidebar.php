@@ -13,12 +13,8 @@ $adminPage = $adminPage ?? 'dashboard';
   <!-- Sidebar Header / Brand Logo -->
   <div class="sidebar-header">
     <a href="index.php" class="sidebar-brand">
-      <div class="brand-icon" style="width: 32px; height: 32px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-        </svg>
-      </div>
-      <span>Fastender</span>
+      <img src="assets/images/logo.png" alt="Tender Projects Logo" class="brand-logo-img">
+      <span>Tender Projects</span>
       <span class="admin-badge">ADMIN</span>
     </a>
   </div>

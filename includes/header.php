@@ -25,5 +25,9 @@ $activePage = $activePage ?? 'beranda';
   <?php if (!empty($extraCss)): ?>
     <link rel="stylesheet" href="<?= htmlspecialchars($extraCss) ?>">
   <?php endif; ?>
+
+  <!-- Favicon / Brand Icon -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
 </head>
 <body>

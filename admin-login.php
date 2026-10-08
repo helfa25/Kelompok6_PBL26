@@ -76,6 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
   <script>
     // Sinkronisasi client-side
     if (localStorage.getItem("fastender_admin_logged_in") === "true") {
@@ -91,12 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       
       <!-- Brand Logo & Header -->
       <div class="login-brand-header">
-        <div class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-        </div>
-        <h1 class="login-title">Admin Fastender</h1>
+        <img src="assets/images/logo.png" alt="Tender Projects Logo" style="width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px; display: block; box-shadow: 0 4px 16px rgba(30, 58, 138, 0.25); border: 2px solid rgba(255, 255, 255, 0.8);">
+        <h1 class="login-title">Admin Tender Projects</h1>
         <p class="login-subtitle">Masuk untuk mengelola data pesanan &amp; katalog produk PO</p>
       </div>
 

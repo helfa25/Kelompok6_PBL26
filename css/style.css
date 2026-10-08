@@ -299,11 +299,28 @@ button {
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: var(--text-white);
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.5px;
+}
+
+.brand-logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: block;
+  flex-shrink: 0;
+}
+
+.navbar-brand:hover .brand-logo-img {
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
 }
 
 .brand-icon {

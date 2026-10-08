@@ -33,7 +33,7 @@ include __DIR__ . '/includes/navbar.php';
           PO Angkatan 2026<br><span>Sudah Dibuka!</span>
         </h1>
         <p class="hero-desc">
-          Wujudkan identitas kebanggaan kelas, jurusan, dan organisasimu bersama Fastender. Bahan standar distro, gratis konsultasi desain bordir, sistem DP 50%, dan jaminan tepat waktu.
+          Wujudkan identitas kebanggaan kelas, jurusan, dan organisasimu bersama Tender Projects (Fastender). Bahan standar distro, gratis konsultasi desain bordir, sistem DP 50%, dan jaminan tepat waktu.
         </p>
         <div class="hero-cta-group">
           <!-- Tombol oranye aksi sesuai spesifikasi figma -->

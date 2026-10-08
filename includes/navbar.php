@@ -11,14 +11,10 @@ $activePage = $activePage ?? 'beranda';
 <header class="navbar">
   <div class="container navbar-container">
     
-    <!-- Kiri: Logo + Nama "Fastender" -->
+    <!-- Kiri: Logo + Nama "Tender Projects / Fastender" -->
     <a href="index.php" class="navbar-brand">
-      <div class="brand-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-        </svg>
-      </div>
-      <span class="brand-text">Fast<span style="color: var(--accent);">ender</span></span>
+      <img src="assets/images/logo.png" alt="Tender Projects Logo" class="brand-logo-img">
+      <span class="brand-text">Tender<span style="color: var(--accent);">Projects</span></span>
     </a>
 
     <!-- Tengah: Menu Navigasi -->

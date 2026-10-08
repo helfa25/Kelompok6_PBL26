@@ -1174,7 +1174,31 @@ button {
   border-radius: var(--radius-lg);
   padding: 24px;
   position: sticky;
-  top: 92px;
+  top: 135px;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filter-sidebar::-webkit-scrollbar-track {
+  background: var(--bg-muted);
+  border-radius: 10px;
+}
+
+.filter-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.filter-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .filter-header {
@@ -2133,14 +2157,62 @@ button {
   color: #ffffff;
 }
 
-/* Category Filter Pills (Horizontal quick-filter) */
+/* --- Sticky Horizontal Category Nav & Filter Bar --- */
+.katalog-sticky-nav-wrapper {
+  position: sticky;
+  top: 72px;
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(249, 250, 251, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.nav-scroll-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 20px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.nav-scroll-arrow:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
 .category-filter-pills {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 6px;
-  margin-bottom: 20px;
-  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  flex: 1;
+  padding: 4px 2px;
+  margin-bottom: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.category-filter-pills::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
 }
 
 .cat-pill {
@@ -2157,6 +2229,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .cat-pill:hover,
@@ -2165,6 +2238,72 @@ button {
   color: #ffffff;
   border-color: var(--primary);
   box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+}
+
+.sticky-filter-toggle-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+}
+
+.sticky-filter-toggle-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-close-filter-mobile {
+  display: none;
+}
+
+/* Floating Back to Top Button */
+.btn-back-to-top {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 890;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background 0.2s ease;
+}
+
+.btn-back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.btn-back-to-top:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
 }
 
 /* Marketplace Card Upgrades */
@@ -2582,6 +2721,14 @@ img, svg, canvas, video {
     font-weight: 600;
   }
 
+  .sticky-filter-toggle-btn {
+    display: inline-flex;
+  }
+
+  .btn-close-filter-mobile {
+    display: inline-flex !important;
+  }
+
   .filter-sidebar {
     display: none;
     background: #ffffff;
@@ -2589,6 +2736,10 @@ img, svg, canvas, video {
     box-shadow: var(--shadow-md);
     padding: 20px;
     margin-bottom: 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .filter-sidebar.show-mobile {
@@ -2833,6 +2984,12 @@ img, svg, canvas, video {
     gap: 10px;
   }
 
+  /* Sticky Horizontal Nav Tablet/Mobile */
+  .katalog-sticky-nav-wrapper {
+    top: 60px;
+    padding: 8px 0;
+  }
+
   /* Footer */
   .footer-grid {
     grid-template-columns: 1fr;
@@ -2967,6 +3124,26 @@ img, svg, canvas, video {
     padding: 10px 14px;
     border-radius: var(--radius-md);
     justify-content: space-between;
+  }
+
+  /* Sticky Category Nav & Controls Mobile */
+  .katalog-sticky-nav-wrapper {
+    top: 60px;
+    gap: 6px;
+  }
+
+  .nav-scroll-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .btn-back-to-top {
+    bottom: 74px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
   }
 }
 

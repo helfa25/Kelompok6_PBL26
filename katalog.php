@@ -63,22 +63,33 @@ include __DIR__ . '/includes/navbar.php';
       </div>
     </div>
 
-    <!-- QUICK CATEGORY PILLS (Horizontal Filter) -->
-    <div class="category-filter-pills" id="category-pills">
-      <button type="button" class="cat-pill <?= ($selectedCat === 'all' || empty($selectedCat)) ? 'active' : '' ?>" data-cat="all">
-        Semua Koleksi (<?= count($allProducts) ?>)
+    <!-- QUICK CATEGORY PILLS (Sticky Horizontal Navigation with Scroll Controls) -->
+    <div class="katalog-sticky-nav-wrapper">
+      <button type="button" class="nav-scroll-arrow left" id="pill-scroll-left" onclick="scrollCategoryPills(-200)" aria-label="Geser Kategori Kiri" title="Geser Kiri">
+        &#8249;
       </button>
-      <button type="button" class="cat-pill <?= ($selectedCat === 'jaket') ? 'active' : '' ?>" data-cat="jaket">
-        🧥 Jaket &amp; Varsity
+      <div class="category-filter-pills" id="category-pills">
+        <button type="button" class="cat-pill <?= ($selectedCat === 'all' || empty($selectedCat)) ? 'active' : '' ?>" data-cat="all">
+          Semua Koleksi (<?= count($allProducts) ?>)
+        </button>
+        <button type="button" class="cat-pill <?= ($selectedCat === 'jaket') ? 'active' : '' ?>" data-cat="jaket">
+          🧥 Jaket &amp; Varsity
+        </button>
+        <button type="button" class="cat-pill <?= ($selectedCat === 'pdh') ? 'active' : '' ?>" data-cat="pdh">
+          👔 Kemeja PDH Drill
+        </button>
+        <button type="button" class="cat-pill <?= ($selectedCat === 'hoodie') ? 'active' : '' ?>" data-cat="hoodie">
+          👕 Hoodie Fleece
+        </button>
+        <button type="button" class="cat-pill <?= ($selectedCat === 'kaos') ? 'active' : '' ?>" data-cat="kaos">
+          🎽 Kaos Angkatan
+        </button>
+      </div>
+      <button type="button" class="nav-scroll-arrow right" id="pill-scroll-right" onclick="scrollCategoryPills(200)" aria-label="Geser Kategori Kanan" title="Geser Kanan">
+        &#8250;
       </button>
-      <button type="button" class="cat-pill <?= ($selectedCat === 'pdh') ? 'active' : '' ?>" data-cat="pdh">
-        👔 Kemeja PDH Drill
-      </button>
-      <button type="button" class="cat-pill <?= ($selectedCat === 'hoodie') ? 'active' : '' ?>" data-cat="hoodie">
-        👕 Hoodie Fleece
-      </button>
-      <button type="button" class="cat-pill <?= ($selectedCat === 'kaos') ? 'active' : '' ?>" data-cat="kaos">
-        🎽 Kaos Angkatan
+      <button type="button" class="sticky-filter-toggle-btn" onclick="toggleFilterSidebar()" title="Buka Filter &amp; Rentang Harga">
+        ⚙️ Filter
       </button>
     </div>
 
@@ -94,9 +105,14 @@ include __DIR__ . '/includes/navbar.php';
       <aside class="filter-sidebar" id="filter-sidebar">
         <div class="filter-header">
           <h3 class="filter-title">Filter Pencarian</h3>
-          <button type="button" id="reset-filter-btn" style="font-size: 12px; color: var(--accent); font-weight: 600; cursor: pointer; background: none; border: none;">
-            Reset Semua
-          </button>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" id="reset-filter-btn" style="font-size: 12px; color: var(--accent); font-weight: 600; cursor: pointer; background: none; border: none;">
+              Reset Semua
+            </button>
+            <button type="button" class="btn-close-filter-mobile" onclick="toggleFilterSidebar()" aria-label="Tutup filter" title="Tutup filter">
+              ✕
+            </button>
+          </div>
         </div>
 
         <!-- Filter Pencarian Kata Kunci -->
@@ -356,6 +372,11 @@ include __DIR__ . '/includes/navbar.php';
     Checkout Sekarang &rarr;
   </div>
 </div>
+
+<!-- FLOATING BACK-TO-TOP BUTTON -->
+<button type="button" id="btn-back-to-top" class="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Kembali ke atas" title="Kembali ke atas">
+  ▲
+</button>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
 
@@ -635,6 +656,25 @@ include __DIR__ . '/includes/navbar.php';
   document.getElementById("quick-co-modal")?.addEventListener("click", (e) => {
     if (e.target.id === "quick-co-modal") {
       closeQuickBuyModal();
+    }
+  });
+
+  // 6. SCROLL HORIZONTAL KATEGORI PILLS
+  function scrollCategoryPills(offset) {
+    const container = document.getElementById("category-pills");
+    if (container) {
+      container.scrollBy({ left: offset, behavior: "smooth" });
+    }
+  }
+
+  // 7. LISTENER TOMBOL KEMBALI KE ATAS (BACK TO TOP)
+  window.addEventListener("scroll", () => {
+    const btn = document.getElementById("btn-back-to-top");
+    if (!btn) return;
+    if (window.scrollY > 300) {
+      btn.classList.add("show");
+    } else {
+      btn.classList.remove("show");
     }
   });
 </script>

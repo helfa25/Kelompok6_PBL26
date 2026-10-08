@@ -463,10 +463,10 @@ function renderEmptyProductSlot(slotIndex = 1) {
           <line x1="8" y1="12" x2="16" y2="12"></line>
         </svg>
       </div>
-      <h3 class="empty-slot-title">Space Kosong Produk PO</h3>
-      <p class="empty-slot-desc">Slot ini disiapkan untuk data produk yang nanti diinput melalui Halaman Admin.</p>
-      <a href="admin-input-produk.php" class="btn btn-outline-accent btn-sm">
-        + Input di Admin
+      <h3 class="empty-slot-title">Katalog Produk PO</h3>
+      <p class="empty-slot-desc">Produk baru edisi angkatan 2026 akan segera dirilis di slot ini.</p>
+      <a href="lacak.php" class="btn btn-outline-accent btn-sm">
+        Lacak Pesanan
       </a>
     </div>
   `;
@@ -476,19 +476,19 @@ function renderEmptySlotBanner() {
   return `
     <div class="empty-slot-banner">
       <div class="empty-slot-banner-text">
-        <div style="font-size: 24px;">📝</div>
+        <div style="font-size: 24px;">✨</div>
         <div>
-          <h4>Space Produk Masih Kosong (Menunggu Input Admin)</h4>
-          <p>Belum ada produk PO yang diterbitkan. Anda dapat menginputkannya melalui Halaman Admin.</p>
+          <h4>Koleksi Produk Pre-Order Segera Dibuka</h4>
+          <p>Katalog apparel resmi angkatan 2026 sedang dalam proses persiapan rilis.</p>
         </div>
       </div>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a href="admin-input-produk.php" class="btn btn-accent btn-sm">
-          + Buka Halaman Input Admin
+        <a href="https://wa.me/6281234567890?text=Halo%20FastTender,%20saya%20ingin%20konsultasi%20PO" target="_blank" class="btn btn-accent btn-sm">
+          💬 Konsultasi via WhatsApp
         </a>
-        <button type="button" class="btn btn-outline-primary btn-sm" onclick="loadDemoProducts()">
-          ⚡ Muat Contoh Demo
-        </button>
+        <a href="lacak.php" class="btn btn-outline-primary btn-sm">
+          🔍 Lacak Pesanan
+        </a>
       </div>
     </div>
   `;

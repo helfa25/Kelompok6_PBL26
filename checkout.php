@@ -256,7 +256,7 @@ include __DIR__ . '/includes/navbar.php';
     </div>
 
     <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #92400e; margin-bottom: 24px; text-align: left;">
-      <strong>Informasi Pembayaran:</strong> Silakan lakukan transfer ke rekening <strong>BCA 828-091-2334 (a.n Fastender Konveksi)</strong> dan simpan bukti transfer untuk verifikasi admin.
+      <strong>Informasi Pembayaran:</strong> Silakan lakukan transfer ke rekening <strong>BCA 828-091-2334 (a.n FastTender Konveksi)</strong> dan simpan bukti transfer untuk verifikasi.
     </div>
 
     <div style="display: flex; gap: 12px;">

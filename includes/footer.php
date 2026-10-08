@@ -31,7 +31,7 @@
             <li><a href="katalog.php">Katalog Produk PO</a></li>
             <li><a href="lacak.php">Lacak Status Pesanan</a></li>
             <li><a href="keranjang.php">Keranjang Belanja</a></li>
-            <li><a href="admin-dashboard.php" style="color: #93c5fd;">Dashboard Admin Fastender</a></li>
+            <li><a href="checkout.php">Formulir Pemesanan PO</a></li>
           </ul>
         </div>
 

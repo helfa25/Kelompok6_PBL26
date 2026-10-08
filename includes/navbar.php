@@ -17,7 +17,7 @@ $activePage = $activePage ?? 'beranda';
       <span class="brand-text">Fast<span style="color: var(--accent);">Tender</span></span>
     </a>
 
-    <!-- Tengah: Menu Navigasi -->
+    <!-- Tengah: Menu Navigasi Pengguna -->
     <nav>
       <ul class="navbar-menu">
         <li>
@@ -35,15 +35,10 @@ $activePage = $activePage ?? 'beranda';
             Lacak Pesanan
           </a>
         </li>
-        <li>
-          <a href="admin-dashboard.php" class="navbar-link" style="color: #93c5fd;">
-            Dashboard Admin
-          </a>
-        </li>
       </ul>
     </nav>
 
-    <!-- Kanan: Tombol Masuk / Admin + Keranjang Belanja -->
+    <!-- Kanan: Keranjang Belanja & Aksi Pelanggan -->
     <div class="navbar-actions">
       <!-- Keranjang Belanja Icon -->
       <a href="keranjang.php" class="cart-btn" aria-label="Keranjang Belanja">
@@ -55,16 +50,10 @@ $activePage = $activePage ?? 'beranda';
         <span class="cart-badge" id="navbar-cart-badge">0</span>
       </a>
 
-      <!-- Tombol Masuk / Dashboard Admin Oranye Sesuai Figma Specs -->
-      <?php if (isAdminLoggedIn()): ?>
-        <a href="admin-dashboard.php" class="btn btn-accent btn-sm" style="display: flex; align-items: center; gap: 6px;">
-          <span>⚙️ Panel Admin</span>
-        </a>
-      <?php else: ?>
-        <a href="admin-login.php" class="btn btn-accent btn-sm">
-          Masuk / Admin
-        </a>
-      <?php endif; ?>
+      <!-- Tombol Aksi Utama Pelanggan (Sesuai Spesifikasi Figma) -->
+      <a href="katalog.php" class="btn btn-accent btn-sm">
+        Mulai PO
+      </a>
 
       <!-- Tombol Menu Mobile Hamburger -->
       <button class="nav-toggle-btn" aria-label="Buka Menu Navigasi">

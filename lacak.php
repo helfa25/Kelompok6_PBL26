@@ -143,7 +143,7 @@ include __DIR__ . '/includes/navbar.php';
       estimatedDelivery: "15 Nov 2026",
       currentStep: 3, // 1-6
       timeline: [
-        { title: "Pesanan Masuk & Verifikasi DP", desc: "Uang muka 50% telah diverifikasi oleh bendahara Fastender.", time: "12 Okt 2026, 14:20 WIB", done: true },
+        { title: "Pesanan Masuk & Verifikasi DP", desc: "Uang muka 50% telah diverifikasi oleh tim FastTender.", time: "12 Okt 2026, 14:20 WIB", done: true },
         { title: "Penutupan Kuota Batch 1", desc: "Target 100 pcs tercapai penuh. Surat Perintah Kerja (SPK) diterbitkan.", time: "14 Okt 2026, 23:59 WIB", done: true },
         { title: "Sedang Produksi Konveksi", desc: "Kain katun fleece 330gsm dipotong dan proses bordir komputer dimulai.", time: "16 Okt 2026, 09:00 WIB", current: true },
         { title: "Quality Check & Steam Ironing", desc: "Pemeriksaan kerapihan benang bordir dan ukuran sesuai size chart.", time: "Estimasi 28 Okt 2026", pending: true },
@@ -164,7 +164,7 @@ include __DIR__ . '/includes/navbar.php';
         { title: "Pesanan Masuk & Verifikasi DP", desc: "Pembayaran lunas 100% tervalidasi.", time: "05 Okt 2026", done: true },
         { title: "Penutupan Kuota Batch 1", desc: "Kuota batch terpenuhi.", time: "07 Okt 2026", done: true },
         { title: "Selesai Produksi Konveksi", desc: "Jahitan rantai ganda dan bordir komputer selesai.", time: "14 Okt 2026", done: true },
-        { title: "Lolos Quality Check", desc: "100% item lolos uji standar mutu Fastender.", time: "17 Okt 2026", done: true },
+        { title: "Lolos Quality Check", desc: "100% item lolos uji standar mutu FastTender.", time: "17 Okt 2026", done: true },
         { title: "Dalam Pengiriman Ekspedisi", desc: "Sedang dalam perjalanan via SiCepat Halu (Resi: 00412891928).", time: "19 Okt 2026, 11:30 WIB", current: true },
         { title: "Pesanan Selesai Diterima", desc: "Menunggu konfirmasi penerimaan di lokasi tujuan.", time: "Estimasi 24 Okt 2026", pending: true }
       ]
@@ -231,8 +231,8 @@ include __DIR__ . '/includes/navbar.php';
               estimatedDelivery: "14 - 21 Hari Kerja",
               currentStep: 1,
               timeline: [
-                { title: "Pesanan Berhasil Masuk", desc: "Pesanan baru telah dicatat di sistem Fastender.", time: found.date, current: true },
-                { title: "Verifikasi Pembayaran DP", desc: "Menunggu konfirmasi admin atas bukti transfer.", time: "Segera", pending: true },
+                { title: "Pesanan Berhasil Masuk", desc: "Pesanan baru telah dicatat di sistem FastTender.", time: found.date, current: true },
+                { title: "Verifikasi Pembayaran DP", desc: "Menunggu verifikasi pembayaran atas bukti transfer.", time: "Segera", pending: true },
                 { title: "Penutupan Kuota Batch", desc: "Menunggu pemenuhan batas kuota batch angkatan.", time: "Jadwal Tutup Batch", pending: true },
                 { title: "Produksi Konveksi", desc: "Proses pemotongan kain dan bordir komputer presisi.", time: "Estimasi 14 Hari", pending: true },
                 { title: "Quality Check & Packing", desc: "Pengecekan akhir mutu pakaian.", time: "Menunggu", pending: true },

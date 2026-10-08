@@ -6,7 +6,7 @@
  */
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Form Pemesanan Pre-Order - Fastender';
+$pageTitle = 'Checkout & Pembayaran Pre-Order - FastTender';
 $activePage = 'keranjang';
 
 include __DIR__ . '/includes/header.php';
@@ -209,9 +209,9 @@ include __DIR__ . '/includes/navbar.php';
               </label>
             </div>
 
-            <!-- Tombol "Konfirmasi Pesanan" Warna Oranye Sesuai Spesifikasi -->
+            <!-- Tombol "Konfirmasi Pesanan" Warna Oranye Sesuai Spesifikasi Marketplace -->
             <button type="submit" id="confirm-order-btn" class="btn btn-accent btn-block btn-lg">
-              Konfirmasi Pesanan
+              ⚡ Buat Pesanan &amp; Bayar (Checkout)
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>

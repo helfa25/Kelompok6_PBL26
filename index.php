@@ -264,18 +264,42 @@ include __DIR__ . '/includes/navbar.php';
                 </div>
               </div>
 
-              <div class="product-footer">
-                <div class="product-price-row">
-                  <span class="product-price"><?= formatRupiah($prod['price']) ?></span>
-                  <span class="product-dp-label">DP: <?= formatRupiah($prod['dp_price']) ?></span>
+                <!-- Rating & Terjual Ala Marketplace -->
+                <div class="product-rating-row">
+                  <span class="rating-stars">★★★★★</span>
+                  <span class="rating-val"><?= number_format($prod['rating'] ?? 4.9, 1) ?></span>
+                  <span class="sold-count">• <?= $prod['sold_count'] ?? 100 ?>+ terjual</span>
                 </div>
-                <!-- Tombol 'Detail Produk' bergaris tepi (outline) oranye sesuai spesifikasi figma -->
-                <a href="detail.php?id=<?= $prod['id'] ?>" class="btn btn-outline-accent btn-block">
-                  Detail Produk
+
+                <!-- Price Box Ala Marketplace -->
+                <div class="marketplace-price-box">
+                  <div class="price-main-wrap">
+                    <span class="product-price"><?= formatRupiah($prod['price']) ?></span>
+                    <span class="product-strike-price"><?= formatRupiah($prod['original_price'] ?? round($prod['price'] * 1.15)) ?></span>
+                  </div>
+                  <span class="product-dp-tag">DP Min 50%: <?= formatRupiah($prod['dp_price']) ?></span>
+                </div>
+
+                <!-- Marketplace Dual Action Buttons -->
+                <div class="marketplace-card-actions">
+                  <button type="button" class="btn-cart-quick" onclick="addToCart(<?= (int)$prod['id'] ?>, 1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>+ Keranjang</span>
+                  </button>
+                  <a href="detail.php?id=<?= $prod['id'] ?>" class="btn-buy-now" style="text-decoration: none;">
+                    ⚡ Beli Sekarang
+                  </a>
+                </div>
+
+                <a href="detail.php?id=<?= $prod['id'] ?>" class="link-detail-view">
+                  Lihat Rincian &amp; Size Chart &rarr;
                 </a>
               </div>
-            </div>
-          </article>
+            </article>
         <?php endforeach; ?>
       <?php endif; ?>
     </div>

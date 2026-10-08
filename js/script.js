@@ -321,19 +321,33 @@ function saveCart(cart) {
 }
 
 function addToCart(productId, quantity = 1, size = "L", color = "", customText = "") {
-  const allProds = getAllProducts();
-  let product = allProds.find(p => p.id === Number(productId));
+  let product = null;
+  if (typeof PRODUCTS_DATA_MAP !== "undefined" && PRODUCTS_DATA_MAP[productId]) {
+    product = PRODUCTS_DATA_MAP[productId];
+  }
   if (!product) {
-    product = DEFAULT_SAMPLE_PRODUCTS.find(p => p.id === Number(productId));
+    const allProds = getAllProducts();
+    product = allProds.find(p => Number(p.id) === Number(productId));
+  }
+  if (!product) {
+    product = DEFAULT_SAMPLE_PRODUCTS.find(p => Number(p.id) === Number(productId));
   }
   if (!product) return false;
 
   const cart = getCart();
-  const existingIndex = cart.findIndex(item => 
-    item.id === product.id && item.size === size && item.color === color && item.customText === customText
-  );
-
+  const prodId = Number(product.id);
+  const prodPrice = Number(product.price) || 0;
+  const prodDpPrice = Number(product.dp_price || product.dpPrice || Math.round(prodPrice * 0.5));
+  const prodName = product.name;
+  const prodCategory = product.category_name || product.categoryName || product.category || "Apparel";
+  const prodIcon = product.icon_type || product.iconType || "varsity";
+  const defaultSize = size || (product.sizes ? product.sizes[0] : "L");
+  const defaultColor = color || (product.colors ? product.colors[0] : "Standar");
   const thumbImg = (product.images && product.images.length > 0) ? product.images[0] : null;
+
+  const existingIndex = cart.findIndex(item => 
+    Number(item.id) === prodId && item.size === defaultSize && item.color === defaultColor && item.customText === customText
+  );
 
   if (existingIndex > -1) {
     cart[existingIndex].quantity += Number(quantity);
@@ -342,22 +356,22 @@ function addToCart(productId, quantity = 1, size = "L", color = "", customText =
     }
   } else {
     cart.push({
-      id: product.id,
-      name: product.name,
-      categoryName: product.categoryName,
-      price: product.price,
-      dpPrice: product.dpPrice,
-      iconType: product.iconType,
+      id: prodId,
+      name: prodName,
+      categoryName: prodCategory,
+      price: prodPrice,
+      dpPrice: prodDpPrice,
+      iconType: prodIcon,
       image: thumbImg,
-      size: size || (product.sizes ? product.sizes[0] : "All Size"),
-      color: color || (product.colors ? product.colors[0] : "Standar"),
+      size: defaultSize,
+      color: defaultColor,
       customText: customText,
       quantity: Number(quantity)
     });
   }
 
   saveCart(cart);
-  showToast(`"${product.name}" berhasil ditambahkan ke keranjang!`, "success");
+  showToast(`✓ "${prodName}" ditambahkan ke keranjang!`, "success");
   return true;
 }
 
@@ -407,43 +421,81 @@ function showToast(message, type = "info") {
 // 5. RENDER PRODUCT CARD HELPER
 // ==========================================
 function renderProductCard(product) {
-  const quotaPercent = Math.min(100, Math.round((product.quotaCurrent / product.quotaTarget) * 100));
+  const quotaTarget = Number(product.quotaTarget || product.quota_target) || 100;
+  const quotaCurrent = Number(product.quotaCurrent || product.quota_current) || 0;
+  const quotaPercent = Math.min(100, Math.round((quotaCurrent / quotaTarget) * 100));
   const hasImages = product.images && product.images.length > 0;
+  const icon = product.iconType || product.icon_type || "varsity";
   const imageElement = hasImages
     ? `<img src="${product.images[0]}" alt="${product.name}" class="product-thumb">`
-    : `<div style="width: 100%; height: 100%; padding: 20px;">${getProductSvg(product.iconType)}</div>`;
+    : `<div style="width: 100%; height: 100%; padding: 20px;">${getProductSvg(icon)}</div>`;
+
+  const badge = product.badge || "Pre-Order";
+  const batch = (product.batch || "Batch 1").split(' ')[0];
+  const catName = product.categoryName || product.category_name || "Apparel PO";
+  const price = Number(product.price);
+  const originalPrice = Number(product.original_price || product.originalPrice) || Math.round(price * 1.15);
+  const dpPrice = Number(product.dpPrice || product.dp_price) || Math.round(price * 0.5);
+  const rating = product.rating || 4.9;
+  const soldCount = product.sold_count || (50 + product.id * 15);
 
   return `
-    <article class="product-card" data-id="${product.id}">
+    <article class="product-card" data-id="${product.id}" data-price="${price}">
       <div class="product-thumb-wrapper">
-        <span class="product-card-badge">${product.badge}</span>
-        <span class="product-batch-tag">${product.batch.split(' ')[0]}</span>
+        <span class="product-card-badge">${badge}</span>
+        <span class="product-batch-tag">${batch}</span>
         ${imageElement}
       </div>
       <div class="product-content">
-        <span class="product-category">${product.categoryName}</span>
-        <h3 class="product-title" title="${product.name}">${product.name}</h3>
+        <!-- Rating Ala Marketplace -->
+        <div class="product-rating-row">
+          <span class="rating-stars">★★★★★</span>
+          <span class="rating-val">${rating}</span>
+          <span class="sold-count">• ${soldCount}+ terjual</span>
+        </div>
+
+        <span class="product-category">${catName}</span>
+        <h3 class="product-title" title="${product.name}">
+          <a href="detail.php?id=${product.id}" style="color: inherit; text-decoration: none;">
+            ${product.name}
+          </a>
+        </h3>
         
         <div class="po-quota-box">
           <div class="po-quota-info">
-            <span>Kuota Terisi: <strong>${product.quotaCurrent}/${product.quotaTarget} pcs</strong></span>
-            <span>${quotaPercent}%</span>
+            <span>Sisa Kuota: <strong>${Math.max(0, quotaTarget - quotaCurrent)} pcs</strong></span>
+            <span>${quotaPercent}% Terpenuhi</span>
           </div>
           <div class="po-progress-bar">
             <div class="po-progress-fill" style="width: ${quotaPercent}%;"></div>
           </div>
         </div>
 
-        <div class="product-footer">
-          <div class="product-price-row">
-            <span class="product-price">${formatRupiah(product.price)}</span>
-            <span class="product-dp-label">DP: ${formatRupiah(product.dpPrice)}</span>
+        <div class="marketplace-price-box">
+          <div class="price-main-wrap">
+            <span class="product-price">${formatRupiah(price)}</span>
+            <span class="product-strike-price">${formatRupiah(originalPrice)}</span>
           </div>
-          <!-- Tombol 'Detail Produk' bergaris tepi (outline) oranye sesuai spesifikasi figma -->
-          <a href="detail.php?id=${product.id}" class="btn btn-outline-accent btn-block">
-            Detail Produk
+          <span class="product-dp-tag">DP Min 50%: ${formatRupiah(dpPrice)}</span>
+        </div>
+
+        <div class="marketplace-card-actions">
+          <button type="button" class="btn-cart-quick" onclick="addToCart(${product.id}, 1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>+ Keranjang</span>
+          </button>
+          <a href="detail.php?id=${product.id}" class="btn-buy-now" style="text-decoration: none;">
+            ⚡ Beli Sekarang
           </a>
         </div>
+
+        <a href="detail.php?id=${product.id}" class="link-detail-view">
+          Lihat Rincian &amp; Size Chart &rarr;
+        </a>
       </div>
     </article>
   `;

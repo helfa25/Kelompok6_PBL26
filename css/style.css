@@ -2060,3 +2060,462 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* ====================================================
+   MARKETPLACE E-COMMERCE & CHECKOUT SYSTEM ENHANCEMENTS
+   ==================================================== */
+.marketplace-hero-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+  border-radius: var(--radius-xl);
+  padding: 30px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
+}
+
+.marketplace-hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.banner-pill {
+  display: inline-block;
+  background: rgba(249, 115, 22, 0.2);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.4);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+}
+
+.marketplace-hero-banner h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.marketplace-hero-banner p {
+  font-size: 13px;
+  color: #cbd5e1;
+  max-width: 650px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.marketplace-banner-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.banner-feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  color: #ffffff;
+}
+
+/* Category Filter Pills (Horizontal quick-filter) */
+.category-filter-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  scrollbar-width: thin;
+}
+
+.cat-pill {
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cat-pill:hover,
+.cat-pill.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+}
+
+/* Marketplace Card Upgrades */
+.product-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.rating-stars {
+  color: #f59e0b;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.rating-val {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sold-count {
+  color: var(--text-muted);
+}
+
+.marketplace-price-box {
+  margin: 10px 0 14px;
+}
+
+.price-main-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.product-strike-price {
+  font-size: 12px;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.product-dp-tag {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.marketplace-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-cart-quick {
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border: 1px solid rgba(30, 58, 138, 0.2);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-cart-quick:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.btn-buy-now {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(249, 115, 22, 0.25);
+}
+
+.btn-buy-now:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px var(--accent-glow);
+}
+
+.link-detail-view {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 8px;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.link-detail-view:hover {
+  color: var(--accent);
+}
+
+/* Quick Checkout Modal (Ala Tokopedia / Shopee) */
+.quick-co-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  padding: 16px;
+}
+
+.quick-co-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.quick-co-modal-content {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.25s ease;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-co-modal-overlay.active .quick-co-modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.quick-co-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: #f8fafc;
+}
+
+.quick-co-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quick-co-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.quick-co-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.quick-co-prod-info {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 16px;
+}
+
+.quick-co-img-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-md);
+  background: #f1f5f9;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+
+.quick-co-img-wrap img,
+.quick-co-img-wrap svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quick-co-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.quick-co-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.quick-co-dp {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.quick-co-option-group {
+  margin-bottom: 16px;
+}
+
+.quick-co-option-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.quick-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-chip {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-color);
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.quick-chip.active {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-hover);
+}
+
+.quick-co-qty-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-step-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.qty-step-input {
+  width: 50px;
+  height: 34px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+.quick-co-total-box {
+  background: var(--primary-subtle);
+  border: 1px solid rgba(30, 58, 138, 0.15);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quick-co-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10px;
+  background: #f8fafc;
+}
+
+/* Floating Sticky Cart Bar */
+.sticky-cart-bar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--primary);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+  display: none;
+  align-items: center;
+  gap: 14px;
+  z-index: 999;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.sticky-cart-bar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.45);
+}
+
+.sticky-cart-count {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}

@@ -57,10 +57,10 @@ include __DIR__ . '/includes/navbar.php';
           <!-- Tab Switcher: 3D Preview & Info Batch PO -->
           <div class="hero-3d-tabs">
             <button type="button" class="hero-3d-tab active" id="tab-btn-3d" onclick="switchHeroView('3d')">
-              🔮 3D Live Model
+              3D Live Model
             </button>
             <button type="button" class="hero-3d-tab" id="tab-btn-batch" onclick="switchHeroView('batch')">
-              ⏳ Info Batch &amp; Kuota
+              Info Batch &amp; Kuota
             </button>
           </div>
 
@@ -79,14 +79,14 @@ include __DIR__ . '/includes/navbar.php';
               <!-- Controls Overlay -->
               <div class="hero-3d-controls">
                 <button type="button" class="hero-3d-btn-icon" id="btn-pause-3d" title="Pause / Putar Rotasi" onclick="toggleHome3DRotation()">
-                  ⏸️
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
                 </button>
                 <button type="button" class="hero-3d-btn-icon" title="Reset Sudut Pandang" onclick="resetHome3DRotation()">
-                  🔄
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                 </button>
               </div>
               <div class="hero-3d-hint">
-                ✋ Drag mouse / sentuh layar untuk putar 360°
+                Drag mouse / sentuh layar untuk putar 360°
               </div>
             </div>
 
@@ -206,7 +206,7 @@ include __DIR__ . '/includes/navbar.php';
               💬 Konsultasi Desain Angkatan
             </a>
             <a href="lacak.php" class="btn btn-outline-primary btn-sm">
-              🔍 Lacak Pesanan
+              Lacak Pesanan
             </a>
           </div>
         </div>
@@ -291,7 +291,7 @@ include __DIR__ . '/includes/navbar.php';
                     <span>+ Keranjang</span>
                   </button>
                   <a href="detail.php?id=<?= $prod['id'] ?>" class="btn-buy-now" style="text-decoration: none;">
-                    ⚡ Beli Sekarang
+                    Beli Sekarang
                   </a>
                 </div>
 
@@ -388,7 +388,9 @@ include __DIR__ . '/includes/navbar.php';
     const isPaused = home3DViewer.togglePause();
     const btn = document.getElementById('btn-pause-3d');
     if (btn) {
-      btn.innerText = isPaused ? '▶️' : '⏸️';
+      btn.innerHTML = isPaused 
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
     }
   }
 

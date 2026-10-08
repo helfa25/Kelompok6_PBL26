@@ -32,10 +32,10 @@ include __DIR__ . '/includes/navbar.php';
       </div>
       <div style="display: flex; gap: 10px;">
         <a href="lacak.php" class="btn btn-outline-primary btn-sm">
-          🔍 Lacak Status PO
+          Lacak Status PO
         </a>
         <a href="keranjang.php" class="btn btn-accent btn-sm">
-          🛒 Lihat Keranjang
+          Keranjang
         </a>
       </div>
     </div>
@@ -51,15 +51,15 @@ include __DIR__ . '/includes/navbar.php';
     <!-- BANNER PROMO MARKETPLACE -->
     <div class="marketplace-hero-banner">
       <div class="marketplace-banner-content">
-        <span class="banner-pill">🔥 OFFICIAL PRE-ORDER STORE</span>
+        <span class="banner-pill">OFFICIAL PRE-ORDER STORE</span>
         <h2>Koleksi Apparel &amp; Atribut Resmi Angkatan 2026</h2>
-        <p>Nikmati kemudahan checkout ala marketplace: pilih varian, bayar DP 50%, bordir komputer presisi, dan pantau produksi secara real-time.</p>
+        <p>Nikmati kemudahan checkout: pilih varian, bayar DP 50%, bordir komputer presisi, dan pantau produksi secara real-time.</p>
       </div>
       <div class="marketplace-banner-badges">
-        <div class="banner-feature-badge"><span>🛡️</span> Garansi Kualitas Mutu</div>
-        <div class="banner-feature-badge"><span>⚡</span> Skema DP Mulai 50%</div>
-        <div class="banner-feature-badge"><span>🚚</span> Ekspedisi Seluruh Indonesia</div>
-        <div class="banner-feature-badge"><span>🧵</span> Free Bordir Nama Panitia</div>
+        <div class="banner-feature-badge">✓ Garansi Kualitas Mutu</div>
+        <div class="banner-feature-badge">✓ Skema DP Mulai 50%</div>
+        <div class="banner-feature-badge">✓ Ekspedisi Seluruh Indonesia</div>
+        <div class="banner-feature-badge">✓ Free Bordir Nama Panitia</div>
       </div>
     </div>
 
@@ -73,29 +73,29 @@ include __DIR__ . '/includes/navbar.php';
           Semua Koleksi (<?= count($allProducts) ?>)
         </button>
         <button type="button" class="cat-pill <?= ($selectedCat === 'jaket') ? 'active' : '' ?>" data-cat="jaket">
-          🧥 Jaket &amp; Varsity
+          Jaket &amp; Varsity
         </button>
         <button type="button" class="cat-pill <?= ($selectedCat === 'pdh') ? 'active' : '' ?>" data-cat="pdh">
-          👔 Kemeja PDH Drill
+          Kemeja PDH Drill
         </button>
         <button type="button" class="cat-pill <?= ($selectedCat === 'hoodie') ? 'active' : '' ?>" data-cat="hoodie">
-          👕 Hoodie Fleece
+          Hoodie Fleece
         </button>
         <button type="button" class="cat-pill <?= ($selectedCat === 'kaos') ? 'active' : '' ?>" data-cat="kaos">
-          🎽 Kaos Angkatan
+          Kaos Angkatan
         </button>
       </div>
       <button type="button" class="nav-scroll-arrow right" id="pill-scroll-right" onclick="scrollCategoryPills(200)" aria-label="Geser Kategori Kanan" title="Geser Kanan">
         &#8250;
       </button>
       <button type="button" class="sticky-filter-toggle-btn" onclick="toggleFilterSidebar()" title="Buka Filter &amp; Rentang Harga">
-        ⚙️ Filter
+        Filter
       </button>
     </div>
 
     <!-- TOMBOL FILTER MOBILE (Hanya tampil di tablet & smartphone) -->
     <button type="button" class="btn btn-outline-primary btn-mobile-filter-toggle" onclick="toggleFilterSidebar()" style="display: none;">
-      ⚙️ Buka Filter &amp; Rentang Harga
+      Filter &amp; Harga
     </button>
 
     <!-- 2 KOLOM LAYOUT: SIDEBAR FILTER & PRODUCT GRID -->
@@ -110,7 +110,9 @@ include __DIR__ . '/includes/navbar.php';
               Reset Semua
             </button>
             <button type="button" class="btn-close-filter-mobile" onclick="toggleFilterSidebar()" aria-label="Tutup filter" title="Tutup filter">
-              ✕
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -256,7 +258,7 @@ include __DIR__ . '/includes/navbar.php';
                   </button>
 
                   <button type="button" class="btn-buy-now" onclick="openQuickBuyModal(<?= (int)$prod['id'] ?>)">
-                    ⚡ Beli Sekarang
+                    Beli Sekarang
                   </button>
                 </div>
 
@@ -289,7 +291,7 @@ include __DIR__ . '/includes/navbar.php';
   <div class="quick-co-modal-content">
     <div class="quick-co-header">
       <h3>
-        <span>⚡</span> Beli Langsung (Quick Checkout)
+        Beli Langsung (Quick Checkout)
       </h3>
       <button type="button" class="quick-co-close-btn" onclick="closeQuickBuyModal()">&times;</button>
     </div>
@@ -350,10 +352,10 @@ include __DIR__ . '/includes/navbar.php';
     <!-- Footer Tombol Aksi Modal -->
     <div class="quick-co-footer">
       <button type="button" class="btn btn-outline-primary" onclick="confirmModalAddToCart()">
-        🛒 + Keranjang
+        + Keranjang
       </button>
       <button type="button" class="btn btn-accent" onclick="confirmModalDirectCheckout()">
-        ⚡ Lanjut ke Checkout &rarr;
+        Lanjut ke Checkout &rarr;
       </button>
     </div>
   </div>
@@ -364,7 +366,11 @@ include __DIR__ . '/includes/navbar.php';
      ========================================== -->
 <div id="sticky-cart-bar" class="sticky-cart-bar" onclick="window.location.href='checkout.php'">
   <div style="display: flex; align-items: center; gap: 8px;">
-    <span style="font-size: 18px;">🛒</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
     <span class="sticky-cart-count" id="sticky-cart-count">0</span>
     <span style="font-size: 13px; font-weight: 600;" id="sticky-cart-total">Total: Rp 0</span>
   </div>
@@ -375,7 +381,9 @@ include __DIR__ . '/includes/navbar.php';
 
 <!-- FLOATING BACK-TO-TOP BUTTON -->
 <button type="button" id="btn-back-to-top" class="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Kembali ke atas" title="Kembali ke atas">
-  ▲
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
 </button>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
@@ -643,11 +651,16 @@ include __DIR__ . '/includes/navbar.php';
   // 5. TOGGLE MOBILE FILTER SIDEBAR
   function toggleFilterSidebar() {
     const sidebar = document.getElementById("filter-sidebar");
-    const btn = document.querySelector(".btn-mobile-filter-toggle");
+    const mainBtn = document.querySelector(".btn-mobile-filter-toggle");
+    const stickyBtn = document.querySelector(".sticky-filter-toggle-btn");
+    
     if (sidebar) {
       const isOpen = sidebar.classList.toggle("show-mobile");
-      if (btn) {
-        btn.textContent = isOpen ? "▲ Tutup Filter Pencarian" : "⚙️ Buka Filter & Rentang Harga";
+      if (mainBtn) {
+        mainBtn.textContent = isOpen ? "Tutup Filter" : "Filter & Harga";
+      }
+      if (stickyBtn) {
+        stickyBtn.textContent = isOpen ? "Tutup" : "Filter";
       }
     }
   }

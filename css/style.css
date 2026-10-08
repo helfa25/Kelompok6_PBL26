@@ -2730,21 +2730,28 @@ img, svg, canvas, video {
   }
 
   .filter-sidebar {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    max-height: 100vh;
     background: #ffffff;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: 0;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.15);
     padding: 20px;
-    margin-bottom: 20px;
-    max-height: 75vh;
+    margin: 0;
+    z-index: 1050;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    transition: left 0.3s ease;
+    display: block;
   }
 
   .filter-sidebar.show-mobile {
-    display: block;
-    animation: fadeIn 0.25s ease;
+    left: 0;
   }
 
   .hero-banner {
